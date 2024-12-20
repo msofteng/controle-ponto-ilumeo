@@ -1,0 +1,18 @@
+{
+    "usuarios": [
+        {
+            "id": 1,
+            "nome": "Mateus Silva",
+            "usuario": "msofteng",
+            "codigo": "4SXXFMf",
+            "marcacoes": [
+                {
+                    "id": 1,
+                    "inicio": "2024-12-10T08:00:00.000Z",
+                    "termino": "2024-12-10T17:00:00.000Z",
+                    "observacao": "N/A"
+                }
+            ]
+        }
+    ]
+}
