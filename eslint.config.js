@@ -9,25 +9,25 @@ export default [
     ...tseslint.configs.recommended,
     pluginReact.configs.flat.recommended,
     {
-        files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}']
+        files: ['**/*.{js,mjs,cjs,ts,jsx,tsx}'],
     },
     {
         languageOptions: {
-            globals: globals.browser
-        }
+            globals: globals.browser,
+        },
     },
     {
         settings: {
             react: {
-                version: 'detect'
-            }
-        }
+                version: 'detect',
+            },
+        },
     },
     {
         rules: {
             'react/react-in-jsx-scope': 0,
-            'quotes': ['error', 'single'],
-            'jsx-quotes': ['error', 'prefer-single']
-        }
-    }
+            quotes: ['error', 'single'],
+            'jsx-quotes': ['error', 'prefer-single'],
+        },
+    },
 ];
