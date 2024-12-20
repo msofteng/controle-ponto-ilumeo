@@ -12,7 +12,7 @@
         "@types/react": "^19.0.2",
         "@types/react-dom": "^19.0.2",
         "ajv": "^8.17.1",
-        "json-server": "^1.0.0-beta.3",
+        "json-server": "^0.17.4",
         "react": "^19.0.0",
         "react-dom": "^19.0.0",
         "react-scripts": "5.0.1",
@@ -26,7 +26,8 @@
         "eject": "react-scripts eject",
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "format": "prettier --write \"**/*.{ts,tsx,html,css,json,js,md}\""
+        "format": "prettier --write \"**/*.{ts,tsx,html,css,json,js,md}\"",
+        "mock": "json-server --watch db.json"
     },
     "eslintConfig": {
         "extends": [

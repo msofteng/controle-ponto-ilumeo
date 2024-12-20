@@ -1,18 +1,26 @@
 {
-    "usuarios": [
-        {
-            "id": 1,
-            "nome": "Mateus Silva",
-            "usuario": "msofteng",
-            "codigo": "4SXXFMf",
-            "marcacoes": [
-                {
-                    "id": 1,
-                    "inicio": "2024-12-10T08:00:00.000Z",
-                    "termino": "2024-12-10T17:00:00.000Z",
-                    "observacao": "N/A"
-                }
-            ]
-        }
-    ]
+  "usuarios": [
+    {
+      "id": "1",
+      "nome": "Mateus Silva",
+      "usuario": "msofteng",
+      "codigo": "4SXXFMf"
+    }
+  ],
+  "marcacoes": [
+    {
+      "id": 1,
+      "inicio": "2024-12-10T08:00:00.000Z",
+      "termino": "2024-12-10T17:00:00.000Z",
+      "observacao": "N/A",
+      "usuarioId": "1"
+    },
+    {
+      "id": 2,
+      "inicio": "2024-12-11T08:00:00.000Z",
+      "termino": "2024-12-11T17:00:00.000Z",
+      "observacao": "exame médico",
+      "usuarioId": "1"
+    }
+  ]
 }
