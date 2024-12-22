@@ -37,7 +37,10 @@ export default function AppLayout(props: {
                         {props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : ''}
 
                         <Link to={'/'} className='title-page' onClick={props.closeNavbar}>
-                            <img src="https://ilumeo.com.br/wp-content/uploads/2023/08/cropped-Icone-Laranja-270x270.png" alt="Logo Ilumeo" />
+                            <img
+                                src='https://ilumeo.com.br/wp-content/uploads/2023/08/cropped-Icone-Laranja-270x270.png'
+                                alt='Logo Ilumeo'
+                            />
                             <Title>
                                 Ponto <strong>Ilumeo</strong>
                             </Title>

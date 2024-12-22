@@ -101,13 +101,9 @@ function App() {
                     />
 
                     <div style={{ flex: 1 }}>
-                        <Text>
-                            Harriette Spoonlicker
-                        </Text>
+                        <Text>Harriette Spoonlicker</Text>
 
-                        <Text>
-                            hspoonlicker@outlook.com
-                        </Text>
+                        <Text>hspoonlicker@outlook.com</Text>
                     </div>
 
                     <IconChevronRight size={14} stroke={1.5} />
