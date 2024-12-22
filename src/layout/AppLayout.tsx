@@ -3,6 +3,7 @@ import { useDisclosure } from '@mantine/hooks';
 import { IconLogout, IconTrash, IconUser } from '@tabler/icons-react';
 import { ReactElement, useState } from 'react';
 import { Link, Outlet } from 'react-router';
+import { Notifications } from '@mantine/notifications';
 
 import theme from '../config/theme';
 
@@ -113,6 +114,7 @@ export default function AppLayout(props: {
                     <Outlet />
                 </AppShell.Main>
             </AppShell>
+            <Notifications position='bottom-center' />
         </MantineProvider>
     );
 }

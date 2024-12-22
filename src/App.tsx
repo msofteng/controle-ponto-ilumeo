@@ -3,8 +3,6 @@ import { Link, Navigate, Route, Routes, useNavigate } from 'react-router';
 import { AnalisePonto, Cadastro, Conta, Inicio, Login, RelogioPonto, TratamentoPonto, TurnosHorarios } from './pages';
 import { List, ThemeIcon } from '@mantine/core';
 import { IconClock, IconCalendarTime, IconChartAreaLine, IconCalendarWeek, IconUser } from '@tabler/icons-react';
-
-import { IconChevronRight } from '@tabler/icons-react';
 import { Avatar, Group, Text, UnstyledButton } from '@mantine/core';
 
 import AppLayout from './layout/AppLayout';

@@ -1,7 +1,8 @@
 import { Button, TextInput, Title } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import Card from '../shared/components/Card';
-import { FormEvent } from 'react';
+import { FormEvent, useEffect } from 'react';
+import { notifications } from '@mantine/notifications';
 
 export function Login(props: { loginDashboard: () => void }) {
     const form = useForm({
@@ -20,6 +21,11 @@ export function Login(props: { loginDashboard: () => void }) {
 
         props.loginDashboard();
     };
+
+    useEffect(() => {
+        console.log('teste');
+        notifications.show({ message: 'Please fill name field', color: 'var(--bg-color-primary)', autoClose: 120000, radius: 'md', bg: 'rgba(var(--bg-color-default-rgb), 0.75)' });
+    }, []);
 
     return (
         <div className='page-login'>
