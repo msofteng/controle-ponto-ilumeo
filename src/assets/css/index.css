@@ -1,0 +1,71 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Epilogue:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --bg-color-default: #060709;
+    --bg-color-default-rgb: 6, 7, 9;
+    --color-default: #cfcfcf;
+    --color-default-rgb: 207, 207, 207;
+    --color-ilumeo: #fa9b1b;
+    --color-ilumeo-rgb: 250, 155, 27;
+
+    --color-primary: #1e2733;
+    --color-primary-rgb: 30, 39, 51;
+    --bg-color-primary: #fe8a00;
+    --bg-color-primary-rgb: 254, 138, 0;
+
+    --color-secondary: #ffffff;
+    --color-secondary-rgb: 255, 255, 255;
+    --bg-color-secondary: #25262b;
+    --bg-color-secondary-rgb: 37, 38, 43;
+
+    --bg-color-main: #151f2b;
+    --bg-color-main-rgb: 21, 31, 43;
+
+    --shadow-sm: 0 0.125rem 0.25rem rgba(var(--color-ilumeo-rgb), 0.075) !important;
+    --shadow: 0 0.5rem 1rem rgba(var(--color-ilumeo-rgb), 0.15) !important;
+    --shadow-lg: 0 1rem 3rem rgba(var(--color-ilumeo-rgb), 0.175) !important;
+
+    --shadow-card: 0 0 5px rgba(var(--color-ilumeo-rgb), 1) !important;
+    --shadow-image: 0 0 10px rgba(var(--color-ilumeo-rgb), 0.5) !important;
+
+    --mantine-color-blue-filled: rgba(var(--bg-color-primary-rgb), 0.9);
+    --mantine-color-blue-filled-hover: rgba(var(--bg-color-primary-rgb), 1);
+    --mantine-color-body: var(--bg-color-default);
+    --mantine-color-black: var(--color-ilumeo);
+
+    --mantine-color-gray-3: var(--color-ilumeo);
+
+    --mantine-radius-default: 16px;
+    --mantine-spacing-md: 17px;
+
+    --app-shell-padding: 20px;
+    --button-radius: 10em;
+}
+
+.shadow-none {
+    box-shadow: none !important;
+}
+
+.shadow-sm {
+    box-shadow: var(--shadow-sm);
+}
+
+.shadow {
+    box-shadow: var(--shadow);
+}
+
+.shadow-card {
+    box-shadow: var(--shadow-card);
+}
+
+.shadow-lg {
+    box-shadow: var(--shadow-lg);
+}
+
+button:not(:has(img)) {
+    --mantine-color-white: var(--color-primary);
+}

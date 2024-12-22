@@ -1,18 +1,18 @@
-import { AppShell, Avatar, Burger, Group, MantineProvider, Menu, UnstyledButton } from '@mantine/core';
+import { AppShell, Avatar, Burger, Group, MantineProvider, Menu, Title, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { MantineLogo } from '@mantinex/mantine-logo';
 import { IconLogout, IconTrash, IconUser } from '@tabler/icons-react';
 import { ReactElement, useState } from 'react';
 import { Link, Outlet } from 'react-router';
 
 import theme from '../config/theme';
 
-import './AppLayout.css';
+import '../assets/css/layout/AppLayout.css';
 
 export default function AppLayout(props: {
     navbar?: ReactElement;
     user?: { name: string; image: string };
     logout: () => void;
+    closeNavbar: () => void;
 }) {
     const [opened, { toggle }] = useDisclosure(false);
     const [userMenuOpened, setUserMenuOpened] = useState(false);
@@ -32,12 +32,14 @@ export default function AppLayout(props: {
                 }
                 padding='md'
             >
-                <AppShell.Header>
+                <AppShell.Header className='header'>
                     <Group h='100%' px='md' justify='space-between'>
-                        { props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : '' }
+                        {props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : ''}
 
-                        <Link to={'/'}>
-                            <MantineLogo size={30} />
+                        <Link to={'/'} onClick={props.closeNavbar}>
+                            <Title className='title-page'>
+                                Ponto <strong>Ilumeo</strong>
+                            </Title>
                         </Link>
 
                         {props.user ? (
@@ -52,15 +54,13 @@ export default function AppLayout(props: {
                                 withinPortal
                             >
                                 <Menu.Target>
-                                    <UnstyledButton
-                                        className={'user' + (userMenuOpened) ? ' userActive' : ''}
-                                    >
+                                    <UnstyledButton className={'user' + userMenuOpened ? ' userActive' : ''}>
                                         <Group gap={7}>
                                             <Avatar
                                                 src={props.user.image}
                                                 alt={props.user.name}
                                                 radius='xl'
-                                                size={35}
+                                                size={'2.7em'}
                                             />
                                         </Group>
                                     </UnstyledButton>
@@ -78,7 +78,7 @@ export default function AppLayout(props: {
                                     <Menu.Divider />
 
                                     <Menu.Label>Conta</Menu.Label>
-                                    <Link to={'/app/conta'}>
+                                    <Link to={'/app/conta'} onClick={props.closeNavbar}>
                                         <Menu.Item leftSection={<IconUser size={16} stroke={1.5} />}>
                                             Minha Conta
                                         </Menu.Item>
@@ -97,8 +97,14 @@ export default function AppLayout(props: {
                         )}
                     </Group>
                 </AppShell.Header>
-                {props.navbar ? <AppShell.Navbar p='md'>{props.navbar}</AppShell.Navbar> : ''}
-                <AppShell.Main>
+                {props.navbar ? (
+                    <AppShell.Navbar className='navbar' p='md'>
+                        {props.navbar}
+                    </AppShell.Navbar>
+                ) : (
+                    ''
+                )}
+                <AppShell.Main className='mainSection'>
                     <Outlet />
                 </AppShell.Main>
             </AppShell>

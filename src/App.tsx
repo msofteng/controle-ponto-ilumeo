@@ -4,7 +4,7 @@ import { AnalisePonto, Cadastro, Conta, Inicio, Login, RelogioPonto, TratamentoP
 
 import AppLayout from './layout/AppLayout';
 
-import './App.css';
+import './assets/css/App.css';
 
 function App() {
     const [logged, setLogged] = useState(false);
@@ -20,13 +20,31 @@ function App() {
         navigate('/login');
     };
 
+    const closeNavbar = () => {
+        document
+            .querySelector<HTMLButtonElement>(
+                'button.mantine-Burger-root:has(> .mantine-Burger-burger[data-opened="true"])'
+            )
+            ?.click();
+    };
+
     const navbarApp = (
         <>
-            <Link to={'/app/relogio'}>Relógio de Ponto</Link>
-            <Link to={'/app/tratamento'}>Tratamento de Ponto</Link>
-            <Link to={'/app/analise'}>Analise de Ponto</Link>
-            <Link to={'/app/horarios'}>Turnos e Horarios</Link>
-            <Link to={'/app/conta'}>Minha Conta</Link>
+            <Link onClick={closeNavbar} to={'/app/relogio'}>
+                Relógio de Ponto
+            </Link>
+            <Link onClick={closeNavbar} to={'/app/tratamento'}>
+                Tratamento de Ponto
+            </Link>
+            <Link onClick={closeNavbar} to={'/app/analise'}>
+                Analise de Ponto
+            </Link>
+            <Link onClick={closeNavbar} to={'/app/horarios'}>
+                Turnos e Horarios
+            </Link>
+            <Link onClick={closeNavbar} to={'/app/conta'}>
+                Minha Conta
+            </Link>
         </>
     );
 
@@ -43,6 +61,7 @@ function App() {
                         navbar={logged ? navbarApp : undefined}
                         user={logged ? userLogged : undefined}
                         logout={logout}
+                        closeNavbar={closeNavbar}
                     />
                 }
             >

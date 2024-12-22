@@ -1,12 +1,14 @@
 .header {
-    padding-top: var(--mantine-spacing-sm);
-    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
-    border-bottom: 1px solid light-dark(var(--mantine-color-gray-2), transparent);
-    margin-bottom: 120px;
+    background-color: var(--bg-color-default);
+}
+
+.navbar {
+    background-color: rgba(var(--bg-color-default-rgb), 0.975);
 }
 
 .mainSection {
     padding-bottom: var(--mantine-spacing-sm);
+    background-color: rgba(var(--bg-color-main-rgb), 0.75);
 }
 
 .user {
@@ -24,10 +26,6 @@
     .user {
         display: none;
     }
-}
-
-.userActive {
-    background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-8));
 }
 
 .tabsList::before {
@@ -55,4 +53,23 @@
     background-color: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
     border-color: light-dark(var(--mantine-color-gray-2), var(--mantine-color-dark-7));
     border-bottom-color: transparent;
+}
+
+.title-page {
+    font-weight: 400;
+    color: var(--color-default);
+}
+
+.title-page strong {
+    font-weight: 800;
+}
+
+@media (max-width: 991px) {
+    .title-page {
+        transform: scale(0.85);
+    }
+
+    .header button:has(> div img) {
+        transform: scale(0.9);
+    }
 }
