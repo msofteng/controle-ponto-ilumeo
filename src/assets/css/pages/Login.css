@@ -1,0 +1,46 @@
+body:has(> div div .page-login) {
+    overflow-y: hidden;
+    background-image: url(../../img/bg-1.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+body:has(> div div .page-login) .mainSection {
+    background-color: rgba(var(--bg-color-default-rgb), 0.85);
+}
+
+.page-login {
+    height: calc(100vh - ((var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) + 20px));
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.page-login .card {
+    width: 400px;
+    height: fit-content;
+    box-shadow: var(--shadow-image);
+}
+
+.page-login img {
+    margin-left: 50px;
+    width: calc(100% - (400px + 50px));
+    border-radius: 16px;
+    box-shadow: var(--shadow-image);
+    height: fit-content;
+}
+
+@media (max-width: 970px) {
+    .page-login {
+        justify-content: center;
+    }
+
+    .page-login .card {
+        margin-bottom: 50px;
+    }
+
+    .page-login img {
+        display: none;
+    }
+}

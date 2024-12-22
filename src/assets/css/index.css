@@ -5,8 +5,10 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
     --bg-color-default: #060709;
     --bg-color-default-rgb: 6, 7, 9;
+
     --color-default: #cfcfcf;
     --color-default-rgb: 207, 207, 207;
     --color-ilumeo: #fa9b1b;
@@ -30,7 +32,7 @@ body {
     --shadow-lg: 0 1rem 3rem rgba(var(--color-ilumeo-rgb), 0.175) !important;
 
     --shadow-card: 0 0 5px rgba(var(--color-ilumeo-rgb), 1) !important;
-    --shadow-image: 0 0 10px rgba(var(--color-ilumeo-rgb), 0.5) !important;
+    --shadow-image: 0 0 50px rgba(var(--color-ilumeo-rgb), 0.5) !important;
 
     --mantine-color-blue-filled: rgba(var(--bg-color-primary-rgb), 0.9);
     --mantine-color-blue-filled-hover: rgba(var(--bg-color-primary-rgb), 1);
@@ -50,6 +52,10 @@ body {
     --button-radius: 10em;
 
     --mantine-color-text: var(--color-default);
+}
+
+div[class*='card'] {
+    --mantine-color-text: var(--color-primary);
 }
 
 /* width */
@@ -108,4 +114,12 @@ button:not(:has(img)) {
 
 .mantine-AppShell-navbar {
     --mantine-spacing-md: 20px;
+}
+
+.mantine-TextInput-label {
+    margin-bottom: 9px;
+}
+
+.mantine-TextInput-error {
+    margin-top: 10px;
 }

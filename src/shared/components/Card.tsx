@@ -3,7 +3,7 @@ import { ComponentProps, ReactElement } from 'react';
 
 function Card(props: { content: ReactElement; cardProps?: ComponentProps<typeof CardMantine> }) {
     return (
-        <CardMantine {...props.cardProps} className='shadow-card'>
+        <CardMantine {...props.cardProps} className='card shadow-card'>
             {props.content}
         </CardMantine>
     );
