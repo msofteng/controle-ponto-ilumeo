@@ -32,7 +32,7 @@ export default function AppLayout(props: {
                 }
                 padding='md'
             >
-                <AppShell.Header className='header'>
+                <AppShell.Header className='header shadow'>
                     <Group h='100%' px='md' justify='space-between'>
                         {props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : ''}
 
@@ -65,11 +65,12 @@ export default function AppLayout(props: {
                                                 alt={props.user.name}
                                                 radius='xl'
                                                 size={'2.6em'}
+                                                className='shadow-image'
                                             />
                                         </Group>
                                     </UnstyledButton>
                                 </Menu.Target>
-                                <Menu.Dropdown>
+                                <Menu.Dropdown className='shadow'>
                                     <Menu.Label>Opções</Menu.Label>
 
                                     <Menu.Item

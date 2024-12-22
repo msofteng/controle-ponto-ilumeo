@@ -33,6 +33,12 @@ function App() {
             ?.click();
     };
 
+    const userLogged = {
+        name: 'Raquel Dias',
+        image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
+        email: 'raqueldias@gmail.com'
+    };
+
     const navbarApp = (
         <>
             <List className='navbar-links' spacing={20} size='sm' center>
@@ -93,27 +99,23 @@ function App() {
                 </List.Item>
             </List>
 
-            <UnstyledButton className='user-navbar'>
+            {userLogged ? <UnstyledButton className='user-navbar'>
                 <Group>
                     <Avatar
-                        src='https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
+                        src={userLogged.image}
                         radius='xl'
+                        className='shadow-image'
                     />
 
                     <div style={{ flex: 1 }}>
-                        <Text>Harriette Spoonlicker</Text>
+                        <Text>{ userLogged.name }</Text>
 
-                        <Text>hspoonlicker@outlook.com</Text>
+                        <Text>{ userLogged.email }</Text>
                     </div>
                 </Group>
-            </UnstyledButton>
+            </UnstyledButton> : ''}
         </>
     );
-
-    const userLogged = {
-        name: 'Raquel Dias',
-        image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
-    };
 
     return (
         <Routes>
