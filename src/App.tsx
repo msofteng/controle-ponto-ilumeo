@@ -63,12 +63,6 @@ export function AppLayout(props: {
             >
                 <AppShell.Header>
                     <Group h="100%" px="md" justify="space-between">
-                        <Burger
-                            opened={opened}
-                            onClick={toggle}
-                            hiddenFrom="sm"
-                            size="sm"
-                        />
                         <Link to={'/'}>
                             <MantineLogo size={30} />
                         </Link>
