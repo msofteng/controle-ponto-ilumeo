@@ -2,11 +2,12 @@ import { AppShell, Avatar, Burger, Group, MantineProvider, Menu, UnstyledButton 
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
 import { IconLogout, IconTrash, IconUser } from '@tabler/icons-react';
-import cx from 'clsx';
 import { ReactElement, useState } from 'react';
 import { Link, Outlet } from 'react-router';
+
 import theme from '../config/theme';
-import classes from './AppLayout.module.css';
+
+import './AppLayout.css';
 
 export default function AppLayout(props: {
     navbar?: ReactElement;
@@ -52,9 +53,7 @@ export default function AppLayout(props: {
                             >
                                 <Menu.Target>
                                     <UnstyledButton
-                                        className={cx(classes.user, {
-                                            [classes.userActive]: userMenuOpened,
-                                        })}
+                                        className={'user' + (userMenuOpened) ? ' userActive' : ''}
                                     >
                                         <Group gap={7}>
                                             <Avatar
