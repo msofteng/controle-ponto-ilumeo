@@ -34,11 +34,11 @@ export default function AppLayout(props: {
             >
                 <AppShell.Header>
                     <Group h='100%' px='md' justify='space-between'>
+                        { props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : '' }
+
                         <Link to={'/'}>
                             <MantineLogo size={30} />
                         </Link>
-
-                        <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' />
 
                         {props.user ? (
                             <Menu
@@ -60,7 +60,7 @@ export default function AppLayout(props: {
                                                 src={props.user.image}
                                                 alt={props.user.name}
                                                 radius='xl'
-                                                size={40}
+                                                size={35}
                                             />
                                         </Group>
                                     </UnstyledButton>
