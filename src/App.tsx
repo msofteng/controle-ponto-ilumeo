@@ -1,39 +1,15 @@
-import {
-    AppShell,
-    Avatar,
-    Burger,
-    createTheme,
-    Group,
-    MantineProvider,
-    Menu,
-    Skeleton,
-    Text,
-    UnstyledButton,
-} from '@mantine/core';
-import '@mantine/core/styles.css';
+import { AppShell, Avatar, Burger, createTheme, Group, MantineProvider, Menu, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { MantineLogo } from '@mantinex/mantine-logo';
-import {
-    IconChevronDown,
-    IconLogout,
-    IconSettings,
-    IconSwitchHorizontal,
-    IconTrash,
-    IconUser,
-} from '@tabler/icons-react';
-import cx from 'clsx';
+import { IconLogout, IconTrash, IconUser } from '@tabler/icons-react';
 import { ReactElement, useState } from 'react';
-import {
-    BrowserRouter,
-    Link,
-    Navigate,
-    Outlet,
-    Route,
-    Routes,
-    useNavigate,
-} from 'react-router';
-import './App.css';
+import { Link, Navigate, Outlet, Route, Routes, useNavigate } from 'react-router';
+
+import cx from 'clsx';
 import classes from './AppShell.module.css';
+
+import '@mantine/core/styles.css';
+import './App.css';
 
 export function AppLayout(props: {
     navbar?: ReactElement;
