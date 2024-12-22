@@ -1,6 +1,11 @@
 import { useState } from 'react';
 import { Link, Navigate, Route, Routes, useNavigate } from 'react-router';
 import { AnalisePonto, Cadastro, Conta, Inicio, Login, RelogioPonto, TratamentoPonto, TurnosHorarios } from './pages';
+import { List, ThemeIcon } from '@mantine/core';
+import { IconClock, IconCalendarTime, IconChartAreaLine, IconCalendarWeek, IconUser } from '@tabler/icons-react';
+
+import { IconChevronRight } from '@tabler/icons-react';
+import { Avatar, Group, Text, UnstyledButton } from '@mantine/core';
 
 import AppLayout from './layout/AppLayout';
 
@@ -30,21 +35,84 @@ function App() {
 
     const navbarApp = (
         <>
-            <Link onClick={closeNavbar} to={'/app/relogio'}>
-                Relógio de Ponto
-            </Link>
-            <Link onClick={closeNavbar} to={'/app/tratamento'}>
-                Tratamento de Ponto
-            </Link>
-            <Link onClick={closeNavbar} to={'/app/analise'}>
-                Analise de Ponto
-            </Link>
-            <Link onClick={closeNavbar} to={'/app/horarios'}>
-                Turnos e Horarios
-            </Link>
-            <Link onClick={closeNavbar} to={'/app/conta'}>
-                Minha Conta
-            </Link>
+            <List spacing={20} size='sm' center>
+                <List.Item
+                    icon={
+                        <ThemeIcon color='blue' size={26} radius='sm'>
+                            <IconClock style={{ width: 20, height: 20, color: 'var(--bg-color-default)' }} />
+                        </ThemeIcon>
+                    }
+                >
+                    <Link onClick={closeNavbar} to={'/app/relogio'}>
+                        Relógio de Ponto
+                    </Link>
+                </List.Item>
+                <List.Item
+                    icon={
+                        <ThemeIcon color='blue' size={26} radius='sm'>
+                            <IconCalendarTime style={{ width: 20, height: 20, color: 'var(--bg-color-default)' }} />
+                        </ThemeIcon>
+                    }
+                >
+                    <Link onClick={closeNavbar} to={'/app/tratamento'}>
+                        Tratamento de Ponto
+                    </Link>
+                </List.Item>
+                <List.Item
+                    icon={
+                        <ThemeIcon color='blue' size={26} radius='sm'>
+                            <IconChartAreaLine style={{ width: 20, height: 20, color: 'var(--bg-color-default)' }} />
+                        </ThemeIcon>
+                    }
+                >
+                    <Link onClick={closeNavbar} to={'/app/analise'}>
+                        Analise de Ponto
+                    </Link>
+                </List.Item>
+                <List.Item
+                    icon={
+                        <ThemeIcon color='blue' size={26} radius='sm'>
+                            <IconCalendarWeek style={{ width: 20, height: 20, color: 'var(--bg-color-default)' }} />
+                        </ThemeIcon>
+                    }
+                >
+                    <Link onClick={closeNavbar} to={'/app/horarios'}>
+                        Turnos e Horarios
+                    </Link>
+                </List.Item>
+                <List.Item
+                    icon={
+                        <ThemeIcon color='blue' size={26} radius='sm'>
+                            <IconUser style={{ width: 20, height: 20, color: 'var(--bg-color-default)' }} />
+                        </ThemeIcon>
+                    }
+                >
+                    <Link onClick={closeNavbar} to={'/app/conta'}>
+                        Minha Conta
+                    </Link>
+                </List.Item>
+            </List>
+
+            <UnstyledButton className='user-navbar'>
+                <Group>
+                    <Avatar
+                        src='https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-8.png'
+                        radius='xl'
+                    />
+
+                    <div style={{ flex: 1 }}>
+                        <Text>
+                            Harriette Spoonlicker
+                        </Text>
+
+                        <Text>
+                            hspoonlicker@outlook.com
+                        </Text>
+                    </div>
+
+                    <IconChevronRight size={14} stroke={1.5} />
+                </Group>
+            </UnstyledButton>
         </>
     );
 

@@ -3,3 +3,19 @@ a {
     font-style: none;
     color: var(--color-default);
 }
+
+.user-navbar {
+    position: absolute;
+    width: calc(100% - (var(--mantine-spacing-md) * 2));
+    bottom: var(--mantine-spacing-md);
+}
+
+.user-navbar p:first-child {
+    --bg-color-secondary: var(--color-ilumeo);
+    font-size: 14px;
+}
+
+.user-navbar p:last-child {
+    --bg-color-secondary: var(--color-default);
+    font-size: 12px;
+}

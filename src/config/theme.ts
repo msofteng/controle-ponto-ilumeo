@@ -1,4 +1,4 @@
-import { createTheme, Text } from '@mantine/core';
+import { createTheme, Text, Title } from '@mantine/core';
 
 import '@mantine/core/styles.css';
 
@@ -12,6 +12,14 @@ const theme = createTheme({
                 c: 'var(--bg-color-secondary)',
                 style: {
                     fontWeight: 400,
+                },
+            },
+        }),
+        Title: Title.extend({
+            defaultProps: {
+                c: 'var(--bg-color-secondary)',
+                style: {
+                    fontWeight: 600,
                 },
             },
         }),

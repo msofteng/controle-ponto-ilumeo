@@ -37,18 +37,24 @@ body {
     --mantine-color-body: var(--bg-color-default);
     --mantine-color-black: var(--color-ilumeo);
 
+    --mantine-color-gray-1: var(--bg-color-primary);
+    --mantine-color-gray-2: var(--color-ilumeo);
     --mantine-color-gray-3: var(--color-ilumeo);
+
+    --mantine-color-dimmed: var(--bg-color-primary);
 
     --mantine-radius-default: 16px;
     --mantine-spacing-md: 17px;
 
     --app-shell-padding: 20px;
     --button-radius: 10em;
+
+    --mantine-color-text: var(--color-default);
 }
 
 /* width */
 ::-webkit-scrollbar {
-    width: 25px;
+    width: 22.5px;
 }
 
 /* Track */
@@ -61,7 +67,6 @@ body {
     border: 5px solid #121922;
     background: rgba(var(--color-ilumeo-rgb), 0.8);
     border-radius: 10em;
-    height: 200px;
 }
 
 /* Handle on hover */
@@ -91,4 +96,16 @@ body {
 
 button:not(:has(img)) {
     --mantine-color-white: var(--color-primary);
+}
+
+.mantine-Menu-dropdown {
+    background-color: var(--bg-color-default);
+}
+
+.mantine-Menu-dropdown .mantine-focus-auto:hover:not([style*='--mantine-color-red-6']) {
+    --menu-item-color: var(--color-primary);
+}
+
+.mantine-AppShell-navbar {
+    --mantine-spacing-md: 20px;
 }

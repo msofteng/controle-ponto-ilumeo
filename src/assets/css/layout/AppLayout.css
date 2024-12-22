@@ -57,7 +57,14 @@
 
 .title-page {
     font-weight: 400;
-    color: var(--color-default);
+    --bg-color-secondary: var(--color-default);
+    display: flex;
+}
+
+.title-page img {
+    width: 44px;
+    height: 44px;
+    margin-right: 17px;
 }
 
 .title-page strong {
@@ -71,5 +78,16 @@
 
     .header button:has(> div img) {
         transform: scale(0.9);
+    }
+}
+
+
+@media (max-width: 441px) {
+    .title-page img {
+        margin-right: 0px;
+    }
+
+    .title-page h1 {
+        display: none;
     }
 }

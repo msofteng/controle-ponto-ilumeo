@@ -24,7 +24,7 @@ export default function AppLayout(props: {
                 navbar={
                     props.navbar
                         ? {
-                              width: { base: 200, md: 300, lg: 400 },
+                              width: { base: 300, md: 300, lg: 400 },
                               breakpoint: 'sm',
                               collapsed: { mobile: !opened },
                           }
@@ -36,8 +36,9 @@ export default function AppLayout(props: {
                     <Group h='100%' px='md' justify='space-between'>
                         {props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : ''}
 
-                        <Link to={'/'} onClick={props.closeNavbar}>
-                            <Title className='title-page'>
+                        <Link to={'/'} className='title-page' onClick={props.closeNavbar}>
+                            <img src="https://ilumeo.com.br/wp-content/uploads/2023/08/cropped-Icone-Laranja-270x270.png" alt="Logo Ilumeo" />
+                            <Title>
                                 Ponto <strong>Ilumeo</strong>
                             </Title>
                         </Link>
@@ -60,7 +61,7 @@ export default function AppLayout(props: {
                                                 src={props.user.image}
                                                 alt={props.user.name}
                                                 radius='xl'
-                                                size={'2.7em'}
+                                                size={'2.6em'}
                                             />
                                         </Group>
                                     </UnstyledButton>

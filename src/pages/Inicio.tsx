@@ -6,11 +6,9 @@ export function Inicio() {
         <Card
             content={
                 <div>
-                    <Title order={3}>You&apos;ve won a million dollars in cash!</Title>
+                    <Title order={3}>Início</Title>
 
-                    <Text mt='sm'>
-                        Please click anywhere on this card to claim your reward, this is not a fraud, trust us
-                    </Text>
+                    <Text mt='sm'>Bem-vindo(a) ao sistema de ponto da Ilumeo</Text>
                 </div>
             }
         />
