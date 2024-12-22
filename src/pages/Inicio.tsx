@@ -1,3 +1,3 @@
 export function Inicio() {
-    return <div>página inicial</div>;
+    return <h2>página inicial</h2>;
 }
