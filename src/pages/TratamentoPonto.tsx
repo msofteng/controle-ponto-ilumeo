@@ -1,3 +1,16 @@
+import { Title, Text } from '@mantine/core';
+import Card from '../shared/components/Card';
+
 export function TratamentoPonto() {
-    return <div>tratamento de ponto</div>;
+    return (
+        <Card
+            content={
+                <div>
+                    <Title order={3}>Tratamento de Ponto</Title>
+
+                    <Text mt='sm'>Visualize as suas horas trabalhadas</Text>
+                </div>
+            }
+        />
+    );
 }
