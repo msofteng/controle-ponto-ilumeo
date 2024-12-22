@@ -35,7 +35,7 @@ function App() {
 
     const navbarApp = (
         <>
-            <List spacing={20} size='sm' center>
+            <List className='navbar-links' spacing={20} size='sm' center>
                 <List.Item
                     icon={
                         <ThemeIcon color='blue' size={26} radius='sm'>
@@ -105,8 +105,6 @@ function App() {
 
                         <Text>hspoonlicker@outlook.com</Text>
                     </div>
-
-                    <IconChevronRight size={14} stroke={1.5} />
                 </Group>
             </UnstyledButton>
         </>

@@ -6,8 +6,9 @@ a {
 
 .user-navbar {
     position: absolute;
-    width: calc(100% - (var(--mantine-spacing-md) * 2));
+    width: calc(100% - ((var(--mantine-spacing-md) * 2) + 22.5px));
     bottom: var(--mantine-spacing-md);
+    background-color: rgba(var(--bg-color-default-rgb), 0.975);
 }
 
 .user-navbar p:first-child {
@@ -18,4 +19,17 @@ a {
 .user-navbar p:last-child {
     --bg-color-secondary: var(--color-default);
     font-size: 12px;
+}
+
+.navbar-links {
+    padding-bottom: 100px;
+    overflow-y: auto;
+}
+
+.navbar-links::-webkit-scrollbar-track {
+    background-color: rgba(var(--bg-color-default-rgb), 0.975);
+}
+
+.navbar-links::-webkit-scrollbar-thumb {
+    border: 5px solid rgba(var(--bg-color-default-rgb), 0.975);
 }
