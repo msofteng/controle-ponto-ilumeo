@@ -29,20 +29,20 @@ export default function AppLayout(props: {
                           }
                         : undefined
                 }
-                padding="md"
+                padding='md'
             >
                 <AppShell.Header>
-                    <Group h="100%" px="md" justify="space-between">
+                    <Group h='100%' px='md' justify='space-between'>
                         <Link to={'/'}>
                             <MantineLogo size={30} />
                         </Link>
 
-                        <Burger opened={opened} onClick={toggle} hiddenFrom="xs" size="sm" />
+                        <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' />
 
                         {props.user ? (
                             <Menu
                                 width={260}
-                                position="bottom-end"
+                                position='bottom-end'
                                 transitionProps={{
                                     transition: 'pop-top-right',
                                 }}
@@ -60,7 +60,7 @@ export default function AppLayout(props: {
                                             <Avatar
                                                 src={props.user.image}
                                                 alt={props.user.name}
-                                                radius="xl"
+                                                radius='xl'
                                                 size={40}
                                             />
                                         </Group>
@@ -85,7 +85,7 @@ export default function AppLayout(props: {
                                         </Menu.Item>
                                     </Link>
                                     <Menu.Item
-                                        color="red"
+                                        color='red'
                                         leftSection={<IconTrash size={16} stroke={1.5} />}
                                         onClick={props.logout}
                                     >
@@ -98,7 +98,7 @@ export default function AppLayout(props: {
                         )}
                     </Group>
                 </AppShell.Header>
-                {props.navbar ? <AppShell.Navbar p="md">{props.navbar}</AppShell.Navbar> : ''}
+                {props.navbar ? <AppShell.Navbar p='md'>{props.navbar}</AppShell.Navbar> : ''}
                 <AppShell.Main>
                     <Outlet />
                 </AppShell.Main>

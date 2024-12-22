@@ -46,23 +46,23 @@ function App() {
                     />
                 }
             >
-                <Route path="login" element={<Login loginDashboard={loginDashboard} />} />
-                <Route path="cadastro" element={<Cadastro />} />
+                <Route path='login' element={<Login loginDashboard={loginDashboard} />} />
+                <Route path='cadastro' element={<Cadastro />} />
 
                 {logged ? (
-                    <Route path="app">
-                        <Route index path="home" element={<Inicio />} />
-                        <Route path="relogio" element={<RelogioPonto />} />
-                        <Route path="tratamento" element={<TratamentoPonto />} />
-                        <Route path="analise" element={<AnalisePonto />} />
-                        <Route path="horarios" element={<TurnosHorarios />} />
-                        <Route path="conta" element={<Conta />} />
+                    <Route path='app'>
+                        <Route index path='home' element={<Inicio />} />
+                        <Route path='relogio' element={<RelogioPonto />} />
+                        <Route path='tratamento' element={<TratamentoPonto />} />
+                        <Route path='analise' element={<AnalisePonto />} />
+                        <Route path='horarios' element={<TurnosHorarios />} />
+                        <Route path='conta' element={<Conta />} />
                     </Route>
                 ) : (
                     ''
                 )}
 
-                <Route path="*" element={<Navigate to={logged ? '/app/home' : '/login'} replace />} />
+                <Route path='*' element={<Navigate to={logged ? '/app/home' : '/login'} replace />} />
             </Route>
         </Routes>
     );
