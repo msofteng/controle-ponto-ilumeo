@@ -1,11 +1,11 @@
 import { Text, Title } from '@mantine/core';
+import { useEffect, useState } from 'react';
+import { converterMarcacoesEmGrafico } from '../shared/functions/chart-convert';
+import { GraficoData, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 
 import Chart from 'react-apexcharts';
 import Card from '../shared/components/Card';
-import { useEffect, useState } from 'react';
-import { GraficoData, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 import service from '../shared/services/service';
-import { converterMarcacoesEmGrafico } from '../shared/functions/chart-convert';
 
 export function AnalisePonto(props: { user?: Usuario }) {
     const [resultados, setResultados] = useState<GraficoData>({ categories: [], series: [] });
@@ -14,7 +14,7 @@ export function AnalisePonto(props: { user?: Usuario }) {
         service
             .getAllMarks(Number(props.user?.id))
             .then((marcacoes) => setResultados(converterMarcacoesEmGrafico(marcacoes)));
-    }, []);
+    }, [props.user?.id]);
 
     return (
         <Card

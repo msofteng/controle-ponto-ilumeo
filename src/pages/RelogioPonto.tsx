@@ -1,29 +1,110 @@
 import { DonutChart } from '@mantine/charts';
 import { Button, Group, Pagination, Paper, Progress, Text, Textarea, Title } from '@mantine/core';
-import { Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
+import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import { ajustarFusoHorarioBrasilia } from '../shared/functions/date-convert';
+import { Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 
 import Card from '../shared/components/Card';
+import toFixed from '../shared/functions/number';
 import service from '../shared/services/service';
 
 export function RelogioPonto(props: { user?: Usuario }) {
     const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
+    const [tempoTrabalhado, setTempoTrabalhado] = useState<number>(0);
+    const [tempoRestante, setTempoRestante] = useState<number>(28800);
+    const [iniciado, setIniciado] = useState<boolean>(false);
+    const [observacao, setObservacao] = useState<string>('');
+    const [marcacaoAtual, setMarcacaoAtual] = useState<Marcacao | null>(null);
 
     useEffect(() => {
-        service.getAllMarks(Number(props.user?.id)).then((marcacoes) => setMarcacoes(marcacoes.reverse()));
-    }, []);
+        service.getAllMarks(Number(props.user?.id)).then((marcacoes) => {
+            setMarcacoes(marcacoes.reverse());
 
-    // Função para calcular as horas trabalhadas, descontando a hora de almoço
+            const ultimaMarcacao = marcacoes.find((m) => m.termino === null);
+            if (ultimaMarcacao) {
+                setMarcacaoAtual(ultimaMarcacao);
+                setIniciado(true);
+
+                const inicioEmSegundos = Math.floor(new Date(ultimaMarcacao.inicio).getTime() / 1000);
+                const agoraEmSegundos = Math.floor(
+                    ajustarFusoHorarioBrasilia(new Date().toISOString()).getTime() / 1000
+                );
+                const tempoDecorrido = agoraEmSegundos - inicioEmSegundos;
+                setTempoTrabalhado(tempoDecorrido);
+                setTempoRestante(28800 - tempoDecorrido);
+            }
+        });
+    }, [props.user?.id]);
+
+    useEffect(() => {
+        let interval: NodeJS.Timeout | undefined;
+
+        if (iniciado) {
+            interval = setInterval(() => {
+                setTempoTrabalhado((prev) => prev + 1);
+                setTempoRestante((prev) => prev - 1);
+            }, 1000);
+        }
+
+        return () => {
+            if (interval) {
+                clearInterval(interval);
+            }
+        };
+    }, [iniciado]);
+
+    const formatarTempo = (tempo: number) => {
+        const horas = Math.floor(tempo / 3600);
+        const minutos = Math.floor((tempo % 3600) / 60);
+        const segundos = tempo % 60;
+        return `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+    };
+
+    const iniciarTurno = async () => {
+        const agora = new Date();
+        const novaMarcacao: Marcacao = {
+            inicio: ajustarFusoHorarioBrasilia(agora.toISOString()).toISOString(),
+            termino: null,
+            observacao: observacao,
+            usuarioId: Number(props.user?.id),
+        };
+        const novaMarcacaoSalva = await service.createMark(Number(props.user?.id), novaMarcacao);
+        setMarcacaoAtual(novaMarcacaoSalva);
+        setIniciado(true);
+        setTempoTrabalhado(0);
+        setTempoRestante(28800);
+    };
+
+    const finalizarTurno = async () => {
+        if (marcacaoAtual) {
+            const agora = new Date();
+            const marcacaoAtualizada: Marcacao = {
+                ...marcacaoAtual,
+                termino: ajustarFusoHorarioBrasilia(agora.toISOString()).toISOString(),
+                observacao,
+            };
+            await service.updateMark(marcacaoAtualizada);
+        }
+
+        setIniciado(false);
+        setObservacao('');
+        service.getAllMarks(Number(props.user?.id)).then((marcacoes) => setMarcacoes(marcacoes.reverse()));
+    };
+
+    const excluirPonto = (id: number) => {
+        service.removeMark(id);
+        setMarcacoes(marcacoes.filter((mark) => mark.id !== id));
+    };
+
     const calcularHorasTrabalhadas = (
         dataInicio: Date,
         dataTermino: Date | null
     ): { horasTrabalhadas: number; horasAusentes: number } => {
-        if (!dataTermino) return { horasTrabalhadas: 0, horasAusentes: 8 }; // Caso não tenha termino, considera como ausente.
+        if (!dataTermino) return { horasTrabalhadas: 0, horasAusentes: 8 };
 
-        // Calculando as horas totais
-        const horasTrabalhadas = (dataTermino.getTime() - dataInicio.getTime()) / (1000 * 60 * 60); // horas totais trabalhadas
+        const horasTrabalhadas = (dataTermino.getTime() - dataInicio.getTime()) / (1000 * 60 * 60);
 
-        // Verificar intervalo de almoço (das 12h00 às 13h00)
         const horaAlmocoInicio = new Date(dataInicio);
         horaAlmocoInicio.setHours(12, 0, 0, 0);
         const horaAlmocoFim = new Date(dataInicio);
@@ -31,20 +112,18 @@ export function RelogioPonto(props: { user?: Usuario }) {
 
         let horasAlmoco = 0;
         if (dataInicio < horaAlmocoFim && dataTermino > horaAlmocoInicio) {
-            horasAlmoco = 1; // Se o intervalo de almoço estiver dentro do horário de trabalho
+            horasAlmoco = 1;
         }
 
-        const horasTrabalhadasCorrigidas = Math.max(0, horasTrabalhadas - horasAlmoco); // Desconta a hora de almoço, mas garante que não fique negativo.
+        const horasTrabalhadasCorrigidas = Math.max(0, horasTrabalhadas - horasAlmoco);
 
-        // Calcular horas ausentes (se menos de 8 horas trabalhadas)
         const horasAusentes = Math.max(0, 8 - horasTrabalhadasCorrigidas);
 
         return { horasTrabalhadas: horasTrabalhadasCorrigidas, horasAusentes };
     };
 
-    // Função para calcular a jornada adicional
     const calcularJornadaAdicional = (horasTrabalhadas: number) => {
-        const jornadaBase = 8; // jornada de 8 horas
+        const jornadaBase = 8;
         if (horasTrabalhadas > jornadaBase) {
             const horasAdicionais = horasTrabalhadas - jornadaBase;
             const horas = Math.floor(horasAdicionais);
@@ -54,14 +133,12 @@ export function RelogioPonto(props: { user?: Usuario }) {
         return null;
     };
 
-    // Função para calcular o progresso (percentual de horas trabalhadas)
     const calcularProgresso = (horasTrabalhadas: number) => {
         const jornadaBase = 8;
         const progresso = Math.min((horasTrabalhadas / jornadaBase) * 100, 100);
         return progresso;
     };
 
-    // Função para formatar a data como "10 de dezembro de 2024"
     const formatarDataPorExtenso = (data: Date) => {
         const opcoes: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
         return new Intl.DateTimeFormat('pt-BR', opcoes).format(data);
@@ -76,9 +153,20 @@ export function RelogioPonto(props: { user?: Usuario }) {
                         <Title order={3}>Relógio de ponto</Title>
 
                         <Title mt={'md'} order={2}>
-                            6h 13m &nbsp;&nbsp; -01:12:05
+                            {formatarTempo(tempoTrabalhado)}{' '}
+                            {Array.from({ length: 5 }).map(() => (
+                                <>&nbsp;</>
+                            ))}{' '}
+                            {formatarTempo(tempoRestante > 0 ? tempoRestante : 0)}
                         </Title>
-                        <Title order={6}>Horas de Hoje &nbsp;&nbsp;&nbsp; Tempo Restante</Title>
+
+                        <Title order={6}>
+                            Horas de Hoje{' '}
+                            {Array.from({ length: 12 }).map(() => (
+                                <>&nbsp;</>
+                            ))}{' '}
+                            Tempo Restante
+                        </Title>
 
                         <Textarea
                             mt={'md'}
@@ -87,10 +175,12 @@ export function RelogioPonto(props: { user?: Usuario }) {
                             placeholder='Ex.: Exame Médico as 16:00, Entrando mais tarde, ...'
                             autosize
                             className='obs-turno'
+                            value={observacao}
+                            onChange={(e) => setObservacao(e.target.value)}
                         />
 
-                        <Button mt='md' variant='filled'>
-                            FINALIZAR TURNO
+                        <Button mt='md' variant='filled' onClick={iniciado ? finalizarTurno : iniciarTurno}>
+                            {iniciado ? 'FINALIZAR TURNO' : 'INICIAR TURNO'}
                         </Button>
 
                         {marcacoes.map((marcacao) => {
@@ -107,7 +197,7 @@ export function RelogioPonto(props: { user?: Usuario }) {
                                     </Text>
 
                                     <Text c='dimmed' ta='left' fz='sm'>
-                                        {horasTrabalhadas}h / 8h
+                                        {toFixed(horasTrabalhadas, 2)}h / 8h
                                         {jornadaAdicional && ` (+${jornadaAdicional})`}
                                     </Text>
 
@@ -128,17 +218,34 @@ export function RelogioPonto(props: { user?: Usuario }) {
                                             {marcacao.observacao}
                                         </Text>
                                     </Group>
+
+                                    <IconTrash
+                                        className='btn-delete-mark'
+                                        onClick={() => excluirPonto(Number(marcacao.id))}
+                                    />
                                 </Paper>
                             );
                         })}
 
-                        <Pagination radius={'md'} total={5} />
+                        {marcacoes.length > 5 ? <Pagination radius={'md'} total={5} /> : <br />}
                     </div>
                     <div className='grafico-ponto'>
                         <DonutChart
                             data={[
-                                { name: 'Tempo Trabalhado', value: 7, color: 'rgba(var(--bg-color-default-rgb), 0.9)' },
-                                { name: 'Tempo Restante', value: 1, color: 'var(--bg-color-primary)' },
+                                {
+                                    name:
+                                        'Tempo Trabalhado (' +
+                                        formatarTempo(tempoTrabalhado > 0 ? tempoTrabalhado : 0) +
+                                        ')',
+                                    value: tempoTrabalhado,
+                                    color: 'rgba(var(--bg-color-default-rgb), 0.9)',
+                                },
+                                {
+                                    name:
+                                        'Tempo Restante (' + formatarTempo(tempoRestante > 0 ? tempoRestante : 0) + ')',
+                                    value: tempoRestante,
+                                    color: 'var(--bg-color-primary)',
+                                },
                             ]}
                             strokeWidth={0}
                             thickness={50}

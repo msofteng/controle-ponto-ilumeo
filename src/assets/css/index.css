@@ -67,24 +67,20 @@ div[class*='card'] {
     --mantine-color-text: var(--color-primary);
 }
 
-/* width */
 ::-webkit-scrollbar {
     width: 22.5px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
     background-color: rgba(var(--bg-color-main-rgb), 0.75);
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
     border: 5px solid #121922;
     background: rgba(var(--color-ilumeo-rgb), 0.8);
     border-radius: 10em;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: rgba(var(--color-ilumeo-rgb), 1);
 }
@@ -128,7 +124,6 @@ button:not(:has(img)) {
 
 .mantine-DatePickerInput-day:where([data-in-range]) {
     --mantine-primary-color-light-hover: rgba(var(--bg-color-primary-rgb), 0.3);
-    /* --mantine-color-text: var(--color-primary); */
 }
 
 .mantine-InputWrapper-description {

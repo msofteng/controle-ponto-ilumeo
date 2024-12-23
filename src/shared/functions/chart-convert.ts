@@ -1,4 +1,5 @@
-import { Marcacao, GraficoData, GraficoDiario } from '../models/interfaces/controle-ponto.entities';
+import { GraficoData, GraficoDiario, Marcacao } from '../models/interfaces/controle-ponto.entities';
+import toFixed from './number';
 
 export function converterMarcacoesEmGrafico(marcacoes: Marcacao[]): GraficoData {
     const agruparPorMes = (date: Date) => `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
@@ -58,12 +59,12 @@ export function converterMarcacoesEmGrafico(marcacoes: Marcacao[]): GraficoData 
         series: [
             {
                 name: 'Horas Trabalhadas',
-                data: horasTrabalhadas,
+                data: horasTrabalhadas.map((v) => Number(toFixed(v, 0))),
                 color: 'var(--bg-color-default)',
             },
             {
                 name: 'Horas Ausentes',
-                data: horasAusentes,
+                data: horasAusentes.map((v) => Number(toFixed(v, 0))),
                 color: 'var(--bg-color-primary)',
             },
         ],
@@ -110,11 +111,17 @@ export function converterMarcacoesEmGraficoDiario(marcacoes: Marcacao[]): Grafic
     });
 
     const data = Object.keys(acumulados)
-        .sort()
+        .sort((a, b) => {
+            const [diaA, mesA] = a.split('/');
+            const [diaB, mesB] = b.split('/');
+            const dataA = new Date(`2024-${mesA}-${diaA}`);
+            const dataB = new Date(`2024-${mesB}-${diaB}`);
+            return dataA.getTime() - dataB.getTime();
+        })
         .map((diaMes) => ({
             dia: diaMes,
-            Trabalhadas: acumulados[diaMes].horasTrabalhadas,
-            Ausentes: acumulados[diaMes].horasAusentes,
+            Trabalhadas: Number(toFixed(acumulados[diaMes].horasTrabalhadas, 2)),
+            Ausentes: Number(toFixed(acumulados[diaMes].horasAusentes, 2)),
         }));
 
     const series = [

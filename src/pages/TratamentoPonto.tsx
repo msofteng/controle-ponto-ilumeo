@@ -3,13 +3,13 @@ import { Text, Title } from '@mantine/core';
 import { DatePickerInput, DatesRangeValue } from '@mantine/dates';
 import { IconCalendarEvent } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
-
-import Card from '../shared/components/Card';
-
-import 'dayjs/locale/pt';
 import { converterMarcacoesEmGraficoDiario } from '../shared/functions/chart-convert';
 import { GraficoDiario, Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
+
+import Card from '../shared/components/Card';
 import service from '../shared/services/service';
+
+import 'dayjs/locale/pt';
 
 export function TratamentoPonto(props: { user?: Usuario }) {
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
@@ -17,12 +17,11 @@ export function TratamentoPonto(props: { user?: Usuario }) {
     const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
 
     useEffect(() => {
-        service
-            .getAllMarks(Number(props.user?.id))
-            .then(
-                (marcacoes) => (setResultados(converterMarcacoesEmGraficoDiario(marcacoes)), setMarcacoes(marcacoes))
-            );
-    }, []);
+        service.getAllMarks(Number(props.user?.id)).then((marcacoes) => {
+            setResultados(converterMarcacoesEmGraficoDiario(marcacoes));
+            setMarcacoes(marcacoes);
+        });
+    }, [props.user?.id]);
 
     const filtrarMarcacoesPorData = (marcacoes: Marcacao[], dataInicio: Date | null, dataFim: Date | null) => {
         if (dataInicio) {

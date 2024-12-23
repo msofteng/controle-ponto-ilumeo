@@ -8,10 +8,10 @@ export interface Usuario {
 }
 
 export interface Marcacao {
-    id: number;
+    id?: number;
     inicio: string;
     termino: string | null;
-    dataInicio: Date;
+    dataInicio?: Date;
     dataTermino?: Date;
     observacao: string;
     usuarioId: number;

@@ -72,11 +72,13 @@ function removeUser(id: number): AxiosResponse<void> {
 
 function getAllMarks(userId: number): AxiosRes<Marcacao[]> {
     return http.get<Marcacao[]>(`/usuarios/${userId}/marcacoes`).then((response) => {
-        return response.data.map((marcacao) => ({
-            ...marcacao,
-            dataInicio: ajustarParaFusoHorarioLocal(marcacao.inicio),
-            dataTermino: marcacao.termino ? ajustarParaFusoHorarioLocal(marcacao.termino) : undefined,
-        }));
+        return response.data
+            .map((marcacao) => ({
+                ...marcacao,
+                dataInicio: ajustarParaFusoHorarioLocal(marcacao.inicio),
+                dataTermino: marcacao.termino ? ajustarParaFusoHorarioLocal(marcacao.termino) : undefined,
+            }))
+            .sort((a, b) => a.dataInicio.getTime() - b.dataInicio.getTime());
     });
 }
 
@@ -100,12 +102,14 @@ function createMark(userId: number, data: Marcacao): AxiosRes<Marcacao> {
     });
 }
 
-function updateMark(userId: number, data: Marcacao): AxiosRes<Marcacao> {
+function updateMark(data: Marcacao): AxiosRes<Marcacao> {
     if (!data.id) {
         throw new Error('O objeto Marcacao deve conter um \'id\' para atualização.');
     }
 
-    return http.put<Marcacao>(`/usuarios/${userId}/marcacoes/${data.id}`, data).then((response) => {
+    delete data.dataInicio;
+
+    return http.put<Marcacao>(`/marcacoes/${data.id}`, data).then((response) => {
         return {
             ...response.data,
             dataInicio: ajustarParaFusoHorarioLocal(response.data.inicio),
@@ -114,8 +118,8 @@ function updateMark(userId: number, data: Marcacao): AxiosRes<Marcacao> {
     });
 }
 
-function removeMark(userId: number, idMark: number): AxiosResponse<void> {
-    return http.delete<void>(`/usuarios/${userId}/marcacoes/${idMark}`);
+function removeMark(idMark: number): AxiosResponse<void> {
+    return http.delete<void>(`/marcacoes/${idMark}`);
 }
 
 const service = {

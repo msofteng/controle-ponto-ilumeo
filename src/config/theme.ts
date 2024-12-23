@@ -6,7 +6,6 @@ import '@mantine/dates/styles.css';
 import '@mantine/charts/styles.css';
 
 const theme = createTheme({
-    /** Put your mantine theme override here */
     fontFamily: 'Epilogue',
     headings: { fontFamily: 'Montserrat', fontWeight: '600' },
     components: {
