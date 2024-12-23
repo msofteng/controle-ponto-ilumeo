@@ -1,5 +1,5 @@
 import { DonutChart } from '@mantine/charts';
-import { Button, Group, Pagination, Paper, Progress, Text, Textarea, Title } from '@mantine/core';
+import { Button, Grid, Group, Pagination, Paper, Progress, Text, Textarea, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { ajustarFusoHorarioBrasilia } from '../shared/functions/date-convert';
@@ -8,6 +8,7 @@ import { Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.en
 import Card from '../shared/components/Card';
 import toFixed from '../shared/functions/number';
 import service from '../shared/services/service';
+import { chunk } from '../shared/functions/utils';
 
 export function RelogioPonto(props: { user?: Usuario }) {
     const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
@@ -16,6 +17,9 @@ export function RelogioPonto(props: { user?: Usuario }) {
     const [iniciado, setIniciado] = useState<boolean>(false);
     const [observacao, setObservacao] = useState<string>('');
     const [marcacaoAtual, setMarcacaoAtual] = useState<Marcacao | null>(null);
+    const [activePage, setActivePage] = useState(1);
+    const paginatedMarcacoes = chunk(marcacoes, 5);
+    const currentPageMarcacoes = paginatedMarcacoes[activePage - 1] || [];
 
     useEffect(() => {
         service.getAllMarks(Number(props.user?.id)).then((marcacoes) => {
@@ -152,21 +156,28 @@ export function RelogioPonto(props: { user?: Usuario }) {
                     <div className='marcacao-ponto'>
                         <Title order={3}>Relógio de ponto</Title>
 
-                        <Title mt={'md'} order={2}>
-                            {formatarTempo(tempoTrabalhado)}{' '}
-                            {Array.from({ length: 5 }).map(() => (
-                                <>&nbsp;</>
-                            ))}{' '}
-                            {formatarTempo(tempoRestante > 0 ? tempoRestante : 0)}
-                        </Title>
-
-                        <Title order={6}>
-                            Horas de Hoje{' '}
-                            {Array.from({ length: 12 }).map(() => (
-                                <>&nbsp;</>
-                            ))}{' '}
-                            Tempo Restante
-                        </Title>
+                        <Grid style={{ width: 300 }} mt={25} mb={30}>
+                            <Grid.Col pt={0} pb={0} span={6}>
+                                <Title style={{ textAlign: 'center' }} order={2}>
+                                    {formatarTempo(tempoTrabalhado)}
+                                </Title>
+                            </Grid.Col>
+                            <Grid.Col pt={0} pb={0} span={6}>
+                                <Title style={{ textAlign: 'center' }} order={2}>
+                                    {formatarTempo(tempoRestante > 0 ? tempoRestante : 0)}
+                                </Title>
+                            </Grid.Col>
+                            <Grid.Col pt={0} pb={0} span={6}>
+                                <Title style={{ textAlign: 'center' }} order={6}>
+                                    Horas de Hoje
+                                </Title>
+                            </Grid.Col>
+                            <Grid.Col pt={0} pb={0} span={6}>
+                                <Title style={{ textAlign: 'center' }} order={6}>
+                                    Tempo Restante
+                                </Title>
+                            </Grid.Col>
+                        </Grid>
 
                         <Textarea
                             mt={'md'}
@@ -183,7 +194,7 @@ export function RelogioPonto(props: { user?: Usuario }) {
                             {iniciado ? 'FINALIZAR TURNO' : 'INICIAR TURNO'}
                         </Button>
 
-                        {marcacoes.map((marcacao) => {
+                        {currentPageMarcacoes.map((marcacao) => {
                             const dataInicio = new Date(marcacao.inicio);
                             const dataTermino = marcacao.termino ? new Date(marcacao.termino) : null;
                             const { horasTrabalhadas } = calcularHorasTrabalhadas(dataInicio, dataTermino);
@@ -227,7 +238,17 @@ export function RelogioPonto(props: { user?: Usuario }) {
                             );
                         })}
 
-                        {marcacoes.length > 5 ? <Pagination radius={'md'} total={5} /> : <br />}
+                        {marcacoes.length > 5 ? (
+                            <Pagination
+                                total={paginatedMarcacoes.length}
+                                value={activePage}
+                                onChange={setActivePage}
+                                mt='sm'
+                                radius='md'
+                            />
+                        ) : (
+                            <br />
+                        )}
                     </div>
                     <div className='grafico-ponto'>
                         <DonutChart
