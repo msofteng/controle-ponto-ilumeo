@@ -1,9 +1,10 @@
-import { Title, Text } from '@mantine/core';
-import Card from '../shared/components/Card';
-import { useState } from 'react';
+import { BarChart } from '@mantine/charts';
+import { Text, Title } from '@mantine/core';
 import { DatePickerInput, DatesRangeValue } from '@mantine/dates';
 import { IconCalendarEvent } from '@tabler/icons-react';
-import { BarChart } from '@mantine/charts';
+import { useState } from 'react';
+
+import Card from '../shared/components/Card';
 
 import 'dayjs/locale/pt';
 

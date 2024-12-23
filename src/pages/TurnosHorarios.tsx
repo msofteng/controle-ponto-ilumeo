@@ -1,4 +1,4 @@
-import { Title, Text } from '@mantine/core';
+import { Text, Title } from '@mantine/core';
 import Card from '../shared/components/Card';
 
 export function TurnosHorarios() {

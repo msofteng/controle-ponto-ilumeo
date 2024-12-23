@@ -1,7 +1,7 @@
-import { Button, Pagination, Textarea, Title } from '@mantine/core';
-import Card from '../shared/components/Card';
 import { DonutChart } from '@mantine/charts';
-import { Group, Paper, Progress, Text } from '@mantine/core';
+import { Button, Group, Pagination, Paper, Progress, Text, Textarea, Title } from '@mantine/core';
+
+import Card from '../shared/components/Card';
 
 export function RelogioPonto() {
     return (

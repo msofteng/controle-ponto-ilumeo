@@ -1,11 +1,14 @@
 import { Button, TextInput, Title } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
-// import { notifications } from '@mantine/notifications';
-import { CSSProperties, FormEvent, useEffect } from 'react';
-// import options from '../config/notification';
-import Card from '../shared/components/Card';
+import { notifications } from '@mantine/notifications';
+import { CSSProperties, FormEvent } from 'react';
+import { Login as ILogin, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 
-export function Login(props: { loginDashboard: () => void }) {
+import options from '../config/notification';
+import Card from '../shared/components/Card';
+import service from '../shared/services/service';
+
+export function Login(props: { loginDashboard: (user: Usuario) => void }) {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: { codigo: '' },
@@ -18,12 +21,38 @@ export function Login(props: { loginDashboard: () => void }) {
     const executaLogin = (values: { codigo: string }, e?: FormEvent<HTMLFormElement>) => {
         e?.preventDefault();
 
-        props.loginDashboard();
-    };
+        service
+            .sendLogin(values.codigo)
+            .then((response) => {
+                const loginData: ILogin = response.data;
 
-    useEffect(() => {
-        // notifications.show({ message: 'Please fill name field', autoClose: 120000, ...options });
-    }, []);
+                if (loginData.status === 200) {
+                    notifications.show({ message: 'Login bem-sucedido!', ...options });
+                    props.loginDashboard(loginData.user as Usuario);
+                } else if (loginData.status === 404) {
+                    notifications.show({
+                        message: (
+                            <>
+                                <strong>Erro: &nbsp;</strong>
+                                {loginData.error?.message}
+                            </>
+                        ),
+                        ...options,
+                    });
+                }
+            })
+            .catch((error) => {
+                notifications.show({
+                    message: (
+                        <>
+                            <strong>Erro: &nbsp;</strong>
+                            {error}
+                        </>
+                    ),
+                    ...options,
+                });
+            });
+    };
 
     return (
         <div className='page-login'>

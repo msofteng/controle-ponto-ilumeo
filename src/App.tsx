@@ -1,21 +1,32 @@
+import { Avatar, Group, List, Text, ThemeIcon, UnstyledButton } from '@mantine/core';
+import { notifications } from '@mantine/notifications';
+import { IconCalendarTime, IconCalendarWeek, IconChartAreaLine, IconClock, IconUser } from '@tabler/icons-react';
 import { useState } from 'react';
 import { Link, Navigate, Route, Routes, useNavigate } from 'react-router';
 import { AnalisePonto, Cadastro, Conta, Inicio, Login, RelogioPonto, TratamentoPonto, TurnosHorarios } from './pages';
-import { List, ThemeIcon } from '@mantine/core';
-import { IconClock, IconCalendarTime, IconChartAreaLine, IconCalendarWeek, IconUser } from '@tabler/icons-react';
-import { Avatar, Group, Text, UnstyledButton } from '@mantine/core';
+import { Usuario } from './shared/models/interfaces/controle-ponto.entities';
 
+import options from './config/notification';
 import AppLayout from './layout/AppLayout';
+import service from './shared/services/service';
 
 import './assets/css/App.css';
 
 function App() {
     const [logged, setLogged] = useState(false);
+    const [userLogged, setUserLogged] = useState<Usuario | undefined>();
     const navigate = useNavigate();
 
-    const loginDashboard = () => {
+    const loginDashboard = (user: Usuario) => {
         setLogged(!logged);
+        setUserLogged(user);
+
         navigate('/app/home');
+    };
+
+    const changeUser = (user: Usuario) => {
+        notifications.show({ message: 'As suas informações foram atualizadas com sucesso!', ...options });
+        service.updateUser(user).then((res) => setUserLogged(res.data));
     };
 
     const logout = () => {
@@ -29,12 +40,6 @@ function App() {
                 'button.mantine-Burger-root:has(> .mantine-Burger-burger[data-opened="true"])'
             )
             ?.click();
-    };
-
-    const userLogged = {
-        name: 'Raquel Dias',
-        image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
-        email: 'raqueldias@gmail.com',
     };
 
     const navbarApp = (
@@ -103,9 +108,9 @@ function App() {
                         <Avatar src={userLogged.image} radius='xl' className='shadow-image' />
 
                         <div style={{ flex: 1 }}>
-                            <Text>{userLogged.name}</Text>
+                            <Text>{userLogged.nome}</Text>
 
-                            <Text>{userLogged.email}</Text>
+                            <Text>@{userLogged.usuario}</Text>
                         </div>
                     </Group>
                 </UnstyledButton>
@@ -137,10 +142,7 @@ function App() {
                         <Route path='tratamento' element={<TratamentoPonto />} />
                         <Route path='analise' element={<AnalisePonto />} />
                         <Route path='horarios' element={<TurnosHorarios />} />
-                        <Route
-                            path='conta'
-                            element={<Conta user={{ nome: userLogged.name, email: userLogged.email }} />}
-                        />
+                        <Route path='conta' element={<Conta user={userLogged} changeUser={changeUser} />} />
                     </Route>
                 ) : (
                     ''

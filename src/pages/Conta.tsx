@@ -1,33 +1,25 @@
-import { Title, Text, TextInput, Button } from '@mantine/core';
-import Card from '../shared/components/Card';
-import { useForm } from '@mantine/form';
+import { Button, Text, TextInput, Title } from '@mantine/core';
+import { isNotEmpty, useForm } from '@mantine/form';
 import { FormEvent } from 'react';
+import { Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 
-export function Conta(props: { user: { nome: string; email: string } }) {
+import Card from '../shared/components/Card';
+
+export function Conta(props: { user?: Usuario; changeUser: (user: Usuario) => void }) {
     const form = useForm({
         mode: 'uncontrolled',
-        initialValues: { nome: props.user.nome, email: props.user.email },
+        initialValues: props.user,
 
         validate: {
             nome: (value) => (value.trim().length === 0 ? 'O nome do usuário está em branco!' : null),
-            email: (value) => {
-                let message = null;
-
-                if (!value || value.trim() === '') {
-                    message = 'O e-mail do usuário está em branco!';
-                } else if (!/^\S+@\S+$/.test(value)) {
-                    message = 'O e-mail não é válido';
-                }
-
-                return message;
-            },
+            usuario: isNotEmpty('O perfil do usuário está em branco!'),
         },
     });
 
-    const atualizaDados = (values: { nome: string; email: string }, e?: FormEvent<HTMLFormElement>) => {
+    const atualizaDados = (values: Usuario, e?: FormEvent<HTMLFormElement>) => {
         e?.preventDefault();
 
-        console.log(values);
+        props.changeUser(values);
     };
 
     return (
@@ -41,18 +33,18 @@ export function Conta(props: { user: { nome: string; email: string } }) {
                     </Text>
 
                     <TextInput
-                        label='Nome do usuário'
-                        placeholder='Name'
+                        label='Nome completo'
+                        placeholder='Nome'
                         key={form.key('nome')}
                         {...form.getInputProps('nome')}
                     />
 
                     <TextInput
                         mt='sm'
-                        label='E-mail do usuário'
-                        placeholder='Email'
-                        key={form.key('email')}
-                        {...form.getInputProps('email')}
+                        label='Nome do usuário'
+                        placeholder='Usuário'
+                        key={form.key('usuario')}
+                        {...form.getInputProps('usuario')}
                     />
 
                     <Button type='submit' mt='md' variant='filled'>

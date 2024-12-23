@@ -1,6 +1,7 @@
-import { Title, Text } from '@mantine/core';
-import Card from '../shared/components/Card';
+import { Text, Title } from '@mantine/core';
+
 import Chart from 'react-apexcharts';
+import Card from '../shared/components/Card';
 
 export function AnalisePonto() {
     return (

@@ -16,4 +16,4 @@ import '../assets/css/pages/RelogioPonto.css';
 import '../assets/css/pages/TratamentoPonto.css';
 import '../assets/css/pages/TurnosHorarios.css';
 
-export { Login, Cadastro, Inicio, RelogioPonto, TratamentoPonto, AnalisePonto, TurnosHorarios, Conta };
+export { AnalisePonto, Cadastro, Conta, Inicio, Login, RelogioPonto, TratamentoPonto, TurnosHorarios };

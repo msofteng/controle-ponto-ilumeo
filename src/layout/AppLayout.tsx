@@ -1,9 +1,10 @@
 import { AppShell, Avatar, Burger, Group, MantineProvider, Menu, Title, UnstyledButton } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
+import { Notifications } from '@mantine/notifications';
 import { IconLogout, IconTrash, IconUser } from '@tabler/icons-react';
 import { ReactElement, useState } from 'react';
 import { Link, Outlet } from 'react-router';
-import { Notifications } from '@mantine/notifications';
+import { Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 
 import theme from '../config/theme';
 
@@ -11,7 +12,7 @@ import '../assets/css/layout/AppLayout.css';
 
 export default function AppLayout(props: {
     navbar?: ReactElement;
-    user?: { name: string; image: string };
+    user?: Usuario;
     logout: () => void;
     closeNavbar: () => void;
 }) {
@@ -63,7 +64,7 @@ export default function AppLayout(props: {
                                         <Group gap={7}>
                                             <Avatar
                                                 src={props.user.image}
-                                                alt={props.user.name}
+                                                alt={props.user.nome}
                                                 radius='xl'
                                                 size={'2.6em'}
                                                 className='shadow-image'
