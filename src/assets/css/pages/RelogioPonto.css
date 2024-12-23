@@ -1,0 +1,69 @@
+body:has(> div div #card-turno) {
+    overflow-y: hidden;
+}
+
+#card-turno {
+    height: calc(100vh - ((var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) + 20px));
+    display: flex;
+    flex-direction: row;
+    overflow-y: auto;
+}
+
+#card-turno::-webkit-scrollbar-track,
+#card-turno *::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+#card-turno::-webkit-scrollbar-thumb,
+#card-turno *::-webkit-scrollbar-thumb {
+    border: 5px solid var(--mantine-color-white);
+}
+
+.obs-turno textarea {
+    min-height: 75px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.marcacao-ponto {
+    width: 100%;
+    margin-right: 40px;
+}
+
+.grafico-ponto {
+    display: flex;
+    align-items: center;
+}
+
+.card-detail {
+    position: relative;
+    overflow: visible;
+    width: 100%;
+    padding: var(--mantine-spacing-md);
+    --mantine-color-body: rgba(var(--color-default-rgb), 0.5);
+    --mantine-color-dimmed: var(--color-primary);
+    --mantine-color-gray-3: rgba(var(--color-primary-rgb), 0.25);
+}
+
+.icon {
+    position: absolute;
+    top: -20px;
+    left: calc(50% - 30px);
+}
+
+.title {
+    font-family:
+        Greycliff CF,
+        var(--mantine-font-family);
+    line-height: 1;
+}
+
+@media (max-width: 1016px) {
+    #card-turno {
+        flex-direction: column;
+    }
+
+    .grafico-ponto {
+        display: none;
+    }
+}

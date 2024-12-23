@@ -118,7 +118,7 @@ button:not(:has(img)) {
 }
 
 .mantine-Popover-dropdown {
-    --mantine-color-white: rgba(var(--bg-color-default-rgb), 0.75);
+    --mantine-color-white: rgba(var(--bg-color-default-rgb), 0.95);
 }
 
 .mantine-DatePickerInput-day:where([data-first-in-range]) {
@@ -155,4 +155,43 @@ button:not(:has(img)) {
 
 .mantine-TextInput-error {
     margin-top: 10px;
+}
+
+.mantine-ChartTooltip-tooltip {
+    --mantine-color-body: var(--color-secondary);
+}
+
+.mantine-BarChart-root {
+    --mantine-color-dimmed: var(--color-primary);
+}
+
+.mantine-ChartLegend-legendItem:hover {
+    color: var(--color-default);
+}
+
+div[seriesname='HorasxTrabalhadas'] {
+    padding-right: 11px;
+}
+
+span.apexcharts-legend-text {
+    text-indent: 8px;
+}
+
+.mantine-Badge-label {
+    color: var(--color-primary);
+}
+
+.mantine-Progress-section {
+    --mantine-color-blue-filled: var(--color-primary);
+}
+
+.mantine-Pagination-root {
+    display: flex;
+    justify-content: center;
+    padding-top: var(--mantine-spacing-md);
+    padding-bottom: calc(var(--mantine-spacing-md) * 3);
+}
+
+.mantine-Pagination-root button:not([data-active='true']) {
+    color: var(--color-default);
 }

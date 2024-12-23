@@ -1,8 +1,8 @@
 import { Button, TextInput, Title } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
+// import { notifications } from '@mantine/notifications';
 import { FormEvent, useEffect } from 'react';
-import options from '../config/notification';
+// import options from '../config/notification';
 import Card from '../shared/components/Card';
 
 export function Login(props: { loginDashboard: () => void }) {
@@ -22,7 +22,7 @@ export function Login(props: { loginDashboard: () => void }) {
     };
 
     useEffect(() => {
-        notifications.show({ message: 'Please fill name field', autoClose: 120000, ...options });
+        // notifications.show({ message: 'Please fill name field', autoClose: 120000, ...options });
     }, []);
 
     return (
