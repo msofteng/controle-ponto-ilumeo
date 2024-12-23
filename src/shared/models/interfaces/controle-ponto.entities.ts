@@ -22,3 +22,17 @@ export interface Login {
     user?: Usuario;
     error?: Error;
 }
+
+export interface GraficoData {
+    categories: string[];
+    series: {
+        name: string;
+        data: number[];
+        color: string;
+    }[];
+}
+
+export interface GraficoDiario {
+    data: { dia: string; Trabalhadas: number; Ausentes: number }[];
+    series: { name: string; color: string }[];
+}

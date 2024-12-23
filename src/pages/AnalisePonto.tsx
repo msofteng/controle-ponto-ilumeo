@@ -2,8 +2,18 @@ import { Text, Title } from '@mantine/core';
 
 import Chart from 'react-apexcharts';
 import Card from '../shared/components/Card';
+import { useEffect, useState } from 'react';
+import { GraficoData, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
+import service from '../shared/services/service';
+import { converterMarcacoesEmGrafico } from '../shared/functions/chart-convert';
 
-export function AnalisePonto() {
+export function AnalisePonto(props: { user?: Usuario }) {
+    const [resultados, setResultados] = useState<GraficoData>({ categories: [], series: [] });
+
+    useEffect(() => {
+        service.getAllMarks(props.user!.id).then((marcacoes) => setResultados(converterMarcacoesEmGrafico(marcacoes)));
+    }, []);
+
     return (
         <Card
             content={
@@ -30,15 +40,7 @@ export function AnalisePonto() {
                             },
                             xaxis: {
                                 type: 'category',
-                                categories: [
-                                    'Junho/2024',
-                                    'Julho/2024',
-                                    'Agosto/2024',
-                                    'Setembro/2024',
-                                    'Outubro/2024',
-                                    'Novembro/2024',
-                                    'Dezembro/2024',
-                                ],
+                                categories: resultados.categories,
                             },
                             title: {
                                 text: 'Horas Trabalhadas (por mês)',
@@ -49,18 +51,7 @@ export function AnalisePonto() {
                                 },
                             },
                         }}
-                        series={[
-                            {
-                                name: 'Horas Trabalhadas',
-                                data: [31, 40, 28, 51, 42, 109, 50],
-                                color: 'var(--bg-color-default)',
-                            },
-                            {
-                                name: 'Horas Ausentes',
-                                data: [11, 32, 45, 32, 34, 52, 60],
-                                color: 'var(--bg-color-primary)',
-                            },
-                        ]}
+                        series={resultados.series}
                         type='area'
                         height={350}
                     />

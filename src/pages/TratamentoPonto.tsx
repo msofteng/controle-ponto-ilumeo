@@ -2,17 +2,60 @@ import { BarChart } from '@mantine/charts';
 import { Text, Title } from '@mantine/core';
 import { DatePickerInput, DatesRangeValue } from '@mantine/dates';
 import { IconCalendarEvent } from '@tabler/icons-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Card from '../shared/components/Card';
 
 import 'dayjs/locale/pt';
+import { converterMarcacoesEmGraficoDiario } from '../shared/functions/chart-convert';
+import { GraficoDiario, Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
+import service from '../shared/services/service';
 
-export function TratamentoPonto() {
+export function TratamentoPonto(props: { user?: Usuario }) {
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
+    const [resultados, setResultados] = useState<GraficoDiario>({ data: [], series: [] });
+    const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
+
+    useEffect(() => {
+        service
+            .getAllMarks(props.user!.id)
+            .then(
+                (marcacoes) => (setResultados(converterMarcacoesEmGraficoDiario(marcacoes)), setMarcacoes(marcacoes))
+            );
+    }, []);
+
+    const filtrarMarcacoesPorData = (marcacoes: Marcacao[], dataInicio: Date | null, dataFim: Date | null) => {
+        if (dataInicio) {
+            dataInicio.setHours(0, 0, 0, 0);
+        }
+        if (dataFim) {
+            dataFim.setHours(23, 59, 59, 999);
+        }
+
+        return marcacoes.filter((marcacao) => {
+            const dataTermino = marcacao.termino ? new Date(marcacao.termino) : null;
+            const dataInicioMarcacao = new Date(marcacao.inicio);
+
+            const estaDentroDoIntervalo =
+                ((dataInicio ? dataInicioMarcacao >= dataInicio : true) &&
+                    (dataFim ? dataTermino && dataTermino <= dataFim : true)) ||
+                (dataInicio && dataFim
+                    ? dataInicioMarcacao <= dataFim && (dataTermino ? dataTermino >= dataInicio : true)
+                    : true);
+
+            return estaDentroDoIntervalo;
+        });
+    };
 
     const updateDatePicker = (value: DatesRangeValue) => {
         setValue(value);
+
+        const [dataInicio, dataFim] = value;
+
+        const marcacoesFiltradas = filtrarMarcacoesPorData(marcacoes, dataInicio, dataFim);
+        const graficoData = converterMarcacoesEmGraficoDiario(marcacoesFiltradas);
+
+        setResultados(graficoData);
     };
 
     return (
@@ -42,47 +85,13 @@ export function TratamentoPonto() {
                     <BarChart
                         mt={'xl'}
                         h={350}
-                        data={[
-                            { dia: '01/01', Trabalhadas: 8, Ausentes: 0 },
-                            { dia: '02/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '03/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '04/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '05/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '06/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '07/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '08/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '09/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '10/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '11/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '12/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '13/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '14/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '15/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '16/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '17/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '18/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '19/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '20/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '21/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '22/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '23/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '24/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '25/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '26/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '27/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '28/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '29/01', Trabalhadas: 5, Ausentes: 3 },
-                            { dia: '30/01', Trabalhadas: 8, Ausentes: 2.5 },
-                        ]}
+                        data={resultados.data}
                         dataKey='dia'
                         withLegend
                         legendProps={{ style: { border: '2px solid red' } }}
                         type='stacked'
                         yAxisLabel='Horas Trabalhadas'
-                        series={[
-                            { name: 'Trabalhadas', color: 'var(--bg-color-default)' },
-                            { name: 'Ausentes', color: 'var(--color-ilumeo)' },
-                        ]}
+                        series={resultados.series}
                         referenceLines={[
                             {
                                 y: 8,

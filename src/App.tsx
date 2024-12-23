@@ -139,8 +139,8 @@ function App() {
                     <Route path='app'>
                         <Route index path='home' element={<Inicio />} />
                         <Route path='relogio' element={<RelogioPonto />} />
-                        <Route path='tratamento' element={<TratamentoPonto />} />
-                        <Route path='analise' element={<AnalisePonto />} />
+                        <Route path='tratamento' element={<TratamentoPonto user={userLogged} />} />
+                        <Route path='analise' element={<AnalisePonto user={userLogged} />} />
                         <Route path='horarios' element={<TurnosHorarios />} />
                         <Route path='conta' element={<Conta user={userLogged} changeUser={changeUser} />} />
                     </Route>
