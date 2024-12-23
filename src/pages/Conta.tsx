@@ -32,20 +32,9 @@ export function Conta(props: { user?: Usuario; changeUser: (user: Usuario) => vo
                         Visualize ou edite as suas informações pessoais
                     </Text>
 
-                    <TextInput
-                        label='Nome completo'
-                        placeholder='Nome'
-                        key={form.key('nome')}
-                        {...form.getInputProps('nome')}
-                    />
+                    <TextInput label='Nome completo' placeholder='Nome' key={form.key('nome')} {...form.getInputProps('nome')} />
 
-                    <TextInput
-                        mt='sm'
-                        label='Nome do usuário'
-                        placeholder='Usuário'
-                        key={form.key('usuario')}
-                        {...form.getInputProps('usuario')}
-                    />
+                    <TextInput mt='sm' label='Nome do usuário' placeholder='Usuário' key={form.key('usuario')} {...form.getInputProps('usuario')} />
 
                     <Button type='submit' mt='md' variant='filled'>
                         Atualizar Informações

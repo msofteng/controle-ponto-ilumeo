@@ -76,10 +76,7 @@ export function Login(props: { loginDashboard: (user: Usuario) => void }) {
                     </form>
                 }
             />
-            <div
-                className='cover-login'
-                style={{ '--bg-image': 'url(' + require('../assets/img/capa-1.jpg') + ')' } as CSSProperties}
-            />
+            <div className='cover-login' style={{ '--bg-image': 'url(' + require('../assets/img/capa-1.jpg') + ')' } as CSSProperties} />
         </div>
     );
 }

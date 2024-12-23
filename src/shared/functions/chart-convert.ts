@@ -40,9 +40,7 @@ export function converterMarcacoesEmGrafico(marcacoes: Marcacao[]): GraficoData 
         .sort()
         .map((mesAno) => {
             const [ano, mes] = mesAno.split('-');
-            const mesNome = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(
-                new Date(parseInt(ano), parseInt(mes) - 1)
-            );
+            const mesNome = new Intl.DateTimeFormat('pt-BR', { month: 'long' }).format(new Date(parseInt(ano), parseInt(mes) - 1));
             return `${mesNome.charAt(0).toUpperCase() + mesNome.slice(1)}/${ano}`;
         });
 

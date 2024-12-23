@@ -11,9 +11,7 @@ export function AnalisePonto(props: { user?: Usuario }) {
     const [resultados, setResultados] = useState<GraficoData>({ categories: [], series: [] });
 
     useEffect(() => {
-        service
-            .getAllMarks(Number(props.user?.id))
-            .then((marcacoes) => setResultados(converterMarcacoesEmGrafico(marcacoes)));
+        service.getAllMarks(Number(props.user?.id)).then((marcacoes) => setResultados(converterMarcacoesEmGrafico(marcacoes)));
     }, [props.user?.id]);
 
     return (
@@ -23,8 +21,7 @@ export function AnalisePonto(props: { user?: Usuario }) {
                     <Title order={3}>Análise de Ponto</Title>
 
                     <Text mt='sm' mb='xl'>
-                        Veja os gráficos de suas horas trabalhadas, incluindo jornadas cumpridas, horas finalizadas,
-                        atrasos e remuneração.
+                        Veja os gráficos de suas horas trabalhadas, incluindo jornadas cumpridas, horas finalizadas, atrasos e remuneração.
                     </Text>
 
                     <Chart

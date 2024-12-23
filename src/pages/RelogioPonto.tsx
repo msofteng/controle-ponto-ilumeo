@@ -31,13 +31,19 @@ export function RelogioPonto(props: { user?: Usuario }) {
                 setIniciado(true);
 
                 const inicioEmSegundos = Math.floor(new Date(ultimaMarcacao.inicio).getTime() / 1000);
-                const agoraEmSegundos = Math.floor(
-                    ajustarFusoHorarioBrasilia(new Date().toISOString()).getTime() / 1000
-                );
+                const agoraEmSegundos = Math.floor(ajustarFusoHorarioBrasilia(new Date().toISOString()).getTime() / 1000);
                 const tempoDecorrido = agoraEmSegundos - inicioEmSegundos;
                 setTempoTrabalhado(tempoDecorrido);
                 setTempoRestante(28800 - tempoDecorrido);
             }
+
+            setTimeout(
+                () =>
+                    document
+                        .querySelector<HTMLDivElement>('.mantine-Pagination-root .mantine-Group-root')
+                        ?.style.setProperty('--group-justify', 'center'),
+                500
+            );
         });
     }, [props.user?.id]);
 
@@ -70,7 +76,7 @@ export function RelogioPonto(props: { user?: Usuario }) {
         const novaMarcacao: Marcacao = {
             inicio: ajustarFusoHorarioBrasilia(agora.toISOString()).toISOString(),
             termino: null,
-            observacao: observacao,
+            observacao: observacao.trim().length > 0 ? observacao : 'N/A',
             usuarioId: Number(props.user?.id),
         };
         const novaMarcacaoSalva = await service.createMark(Number(props.user?.id), novaMarcacao);
@@ -86,7 +92,7 @@ export function RelogioPonto(props: { user?: Usuario }) {
             const marcacaoAtualizada: Marcacao = {
                 ...marcacaoAtual,
                 termino: ajustarFusoHorarioBrasilia(agora.toISOString()).toISOString(),
-                observacao,
+                observacao: observacao.trim().length > 0 ? observacao : 'N/A',
             };
             await service.updateMark(marcacaoAtualizada);
         }
@@ -101,10 +107,7 @@ export function RelogioPonto(props: { user?: Usuario }) {
         setMarcacoes(marcacoes.filter((mark) => mark.id !== id));
     };
 
-    const calcularHorasTrabalhadas = (
-        dataInicio: Date,
-        dataTermino: Date | null
-    ): { horasTrabalhadas: number; horasAusentes: number } => {
+    const calcularHorasTrabalhadas = (dataInicio: Date, dataTermino: Date | null): { horasTrabalhadas: number; horasAusentes: number } => {
         if (!dataTermino) return { horasTrabalhadas: 0, horasAusentes: 8 };
 
         const horasTrabalhadas = (dataTermino.getTime() - dataInicio.getTime()) / (1000 * 60 * 60);
@@ -154,7 +157,17 @@ export function RelogioPonto(props: { user?: Usuario }) {
             content={
                 <>
                     <div className='marcacao-ponto'>
-                        <Title order={3}>Relógio de ponto</Title>
+                        <div className='titulo-relogio'>
+                            <Title order={3}>Relógio de ponto</Title>
+                            <div>
+                                <Title fw={700} order={5}>
+                                    #{props.user?.codigo}
+                                </Title>
+                                <Title fw={300} order={6}>
+                                    Usuário
+                                </Title>
+                            </div>
+                        </div>
 
                         <Grid style={{ width: 300 }} mt={25} mb={30}>
                             <Grid.Col pt={0} pb={0} span={6}>
@@ -230,22 +243,13 @@ export function RelogioPonto(props: { user?: Usuario }) {
                                         </Text>
                                     </Group>
 
-                                    <IconTrash
-                                        className='btn-delete-mark'
-                                        onClick={() => excluirPonto(Number(marcacao.id))}
-                                    />
+                                    <IconTrash className='btn-delete-mark' onClick={() => excluirPonto(Number(marcacao.id))} />
                                 </Paper>
                             );
                         })}
 
                         {marcacoes.length > 5 ? (
-                            <Pagination
-                                total={paginatedMarcacoes.length}
-                                value={activePage}
-                                onChange={setActivePage}
-                                mt='sm'
-                                radius='md'
-                            />
+                            <Pagination total={paginatedMarcacoes.length} value={activePage} onChange={setActivePage} mt='sm' radius='md' />
                         ) : (
                             <br />
                         )}
@@ -254,16 +258,12 @@ export function RelogioPonto(props: { user?: Usuario }) {
                         <DonutChart
                             data={[
                                 {
-                                    name:
-                                        'Tempo Trabalhado (' +
-                                        formatarTempo(tempoTrabalhado > 0 ? tempoTrabalhado : 0) +
-                                        ')',
+                                    name: 'Tempo Trabalhado (' + formatarTempo(tempoTrabalhado > 0 ? tempoTrabalhado : 0) + ')',
                                     value: tempoTrabalhado,
                                     color: 'rgba(var(--bg-color-default-rgb), 0.9)',
                                 },
                                 {
-                                    name:
-                                        'Tempo Restante (' + formatarTempo(tempoRestante > 0 ? tempoRestante : 0) + ')',
+                                    name: 'Tempo Restante (' + formatarTempo(tempoRestante > 0 ? tempoRestante : 0) + ')',
                                     value: tempoRestante,
                                     color: 'var(--bg-color-primary)',
                                 },

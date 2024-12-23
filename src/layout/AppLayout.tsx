@@ -10,12 +10,7 @@ import theme from '../config/theme';
 
 import '../assets/css/layout/AppLayout.css';
 
-export default function AppLayout(props: {
-    navbar?: ReactElement;
-    user?: Usuario;
-    logout: () => void;
-    closeNavbar: () => void;
-}) {
+export default function AppLayout(props: { navbar?: ReactElement; user?: Usuario; logout: () => void; closeNavbar: () => void }) {
     const [opened, { toggle }] = useDisclosure(false);
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -39,10 +34,7 @@ export default function AppLayout(props: {
                         {props.navbar ? <Burger opened={opened} onClick={toggle} hiddenFrom='xs' size='sm' /> : ''}
 
                         <Link to={'/'} className='title-page' onClick={props.closeNavbar}>
-                            <img
-                                src='https://ilumeo.com.br/wp-content/uploads/2023/08/cropped-Icone-Laranja-270x270.png'
-                                alt='Logo Ilumeo'
-                            />
+                            <img src='https://ilumeo.com.br/wp-content/uploads/2023/08/cropped-Icone-Laranja-270x270.png' alt='Logo Ilumeo' />
                             <Title>
                                 Ponto <strong>Ilumeo</strong>
                             </Title>
@@ -75,10 +67,7 @@ export default function AppLayout(props: {
                                 <Menu.Dropdown className='shadow'>
                                     <Menu.Label>Opções</Menu.Label>
 
-                                    <Menu.Item
-                                        leftSection={<IconLogout size={16} stroke={1.5} />}
-                                        onClick={props.logout}
-                                    >
+                                    <Menu.Item leftSection={<IconLogout size={16} stroke={1.5} />} onClick={props.logout}>
                                         Sair
                                     </Menu.Item>
 
@@ -86,15 +75,9 @@ export default function AppLayout(props: {
 
                                     <Menu.Label>Conta</Menu.Label>
                                     <Link to={'/app/conta'} onClick={props.closeNavbar}>
-                                        <Menu.Item leftSection={<IconUser size={16} stroke={1.5} />}>
-                                            Minha Conta
-                                        </Menu.Item>
+                                        <Menu.Item leftSection={<IconUser size={16} stroke={1.5} />}>Minha Conta</Menu.Item>
                                     </Link>
-                                    <Menu.Item
-                                        color='red'
-                                        leftSection={<IconTrash size={16} stroke={1.5} />}
-                                        onClick={props.logout}
-                                    >
+                                    <Menu.Item color='red' leftSection={<IconTrash size={16} stroke={1.5} />} onClick={props.logout}>
                                         Remover Conta
                                     </Menu.Item>
                                 </Menu.Dropdown>

@@ -36,11 +36,8 @@ export function TratamentoPonto(props: { user?: Usuario }) {
             const dataInicioMarcacao = new Date(marcacao.inicio);
 
             const estaDentroDoIntervalo =
-                ((dataInicio ? dataInicioMarcacao >= dataInicio : true) &&
-                    (dataFim ? dataTermino && dataTermino <= dataFim : true)) ||
-                (dataInicio && dataFim
-                    ? dataInicioMarcacao <= dataFim && (dataTermino ? dataTermino >= dataInicio : true)
-                    : true);
+                ((dataInicio ? dataInicioMarcacao >= dataInicio : true) && (dataFim ? dataTermino && dataTermino <= dataFim : true)) ||
+                (dataInicio && dataFim ? dataInicioMarcacao <= dataFim && (dataTermino ? dataTermino >= dataInicio : true) : true);
 
             return estaDentroDoIntervalo;
         });
@@ -76,9 +73,7 @@ export function TratamentoPonto(props: { user?: Usuario }) {
                         value={value}
                         onChange={updateDatePicker}
                         leftSectionWidth={40}
-                        leftSection={
-                            <IconCalendarEvent style={{ width: 20, height: 20, color: 'var(--color-subtitle)' }} />
-                        }
+                        leftSection={<IconCalendarEvent style={{ width: 20, height: 20, color: 'var(--color-subtitle)' }} />}
                     />
 
                     <BarChart

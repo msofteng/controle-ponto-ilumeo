@@ -66,6 +66,12 @@ body:has(> div div #card-turno) {
     cursor: pointer;
 }
 
+.titulo-relogio {
+    display: flex;
+    justify-content: space-between;
+    text-align: right;
+}
+
 @media (max-width: 1016px) {
     #card-turno {
         flex-direction: column;

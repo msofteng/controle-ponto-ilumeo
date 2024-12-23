@@ -2,7 +2,7 @@ import axios from 'axios';
 import { Login, Marcacao, Usuario } from '../models/interfaces/controle-ponto.entities';
 import { ajustarParaFusoHorarioLocal } from '../functions/date-convert';
 
-const http = axios.create({ baseURL: 'http://localhost:3001' });
+const http = axios.create({ baseURL: 'http://192.168.0.101:3001' });
 
 function sendLogin(code: string): AxiosResponse<Login> {
     return http

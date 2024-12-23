@@ -36,11 +36,7 @@ function App() {
     };
 
     const closeNavbar = () => {
-        document
-            .querySelector<HTMLButtonElement>(
-                'button.mantine-Burger-root:has(> .mantine-Burger-burger[data-opened="true"])'
-            )
-            ?.click();
+        document.querySelector<HTMLButtonElement>('button.mantine-Burger-root:has(> .mantine-Burger-burger[data-opened="true"])')?.click();
     };
 
     const navbarApp = (

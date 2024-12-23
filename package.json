@@ -53,7 +53,7 @@
         "lint": "eslint",
         "lint:fix": "eslint --fix",
         "format": "prettier --write \"**/*.{ts,tsx,html,css,json,js,md}\"",
-        "mock": "json-server --watch db.json --port 3001"
+        "mock": "json-server --watch db.json --port 3001 --host 0.0.0.0"
     },
     "eslintConfig": {
         "extends": [
