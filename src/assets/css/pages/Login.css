@@ -23,12 +23,15 @@ body:has(> div div .page-login) .mainSection {
     box-shadow: var(--shadow-image);
 }
 
-.page-login img {
+.page-login .cover-login {
     margin-left: 50px;
-    width: calc(100% - (400px + 50px));
+    height: calc(100vh - ((var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) + 40px));
     border-radius: 16px;
     box-shadow: var(--shadow-image);
-    height: fit-content;
+    width: calc(100% - (400px + 50px));
+    background-image: var(--bg-image);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 @media (max-width: 970px) {
@@ -37,10 +40,10 @@ body:has(> div div .page-login) .mainSection {
     }
 
     .page-login .card {
-        margin-bottom: 50px;
+        margin-bottom: 100px;
     }
 
-    .page-login img {
+    .page-login .cover-login {
         display: none;
     }
 }
