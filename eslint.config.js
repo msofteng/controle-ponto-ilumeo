@@ -28,7 +28,7 @@ export default [
             'react/react-in-jsx-scope': 0,
             quotes: ['error', 'single'],
             'jsx-quotes': ['error', 'prefer-single'],
-            '@typescript-eslint/no-require-imports': 'off'
+            '@typescript-eslint/no-require-imports': 'off',
         },
     },
 ];

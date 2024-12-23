@@ -34,7 +34,7 @@ function App() {
     const userLogged = {
         name: 'Raquel Dias',
         image: 'https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-5.png',
-        email: 'raqueldias@gmail.com'
+        email: 'raqueldias@gmail.com',
     };
 
     const navbarApp = (
@@ -97,21 +97,21 @@ function App() {
                 </List.Item>
             </List>
 
-            {userLogged ? <UnstyledButton className='user-navbar'>
-                <Group>
-                    <Avatar
-                        src={userLogged.image}
-                        radius='xl'
-                        className='shadow-image'
-                    />
+            {userLogged ? (
+                <UnstyledButton className='user-navbar'>
+                    <Group>
+                        <Avatar src={userLogged.image} radius='xl' className='shadow-image' />
 
-                    <div style={{ flex: 1 }}>
-                        <Text>{ userLogged.name }</Text>
+                        <div style={{ flex: 1 }}>
+                            <Text>{userLogged.name}</Text>
 
-                        <Text>{ userLogged.email }</Text>
-                    </div>
-                </Group>
-            </UnstyledButton> : ''}
+                            <Text>{userLogged.email}</Text>
+                        </div>
+                    </Group>
+                </UnstyledButton>
+            ) : (
+                ''
+            )}
         </>
     );
 
@@ -137,7 +137,10 @@ function App() {
                         <Route path='tratamento' element={<TratamentoPonto />} />
                         <Route path='analise' element={<AnalisePonto />} />
                         <Route path='horarios' element={<TurnosHorarios />} />
-                        <Route path='conta' element={<Conta />} />
+                        <Route
+                            path='conta'
+                            element={<Conta user={{ nome: userLogged.name, email: userLogged.email }} />}
+                        />
                     </Route>
                 ) : (
                     ''

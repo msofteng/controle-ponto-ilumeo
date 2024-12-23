@@ -13,6 +13,7 @@ body {
     --color-default-rgb: 207, 207, 207;
     --color-ilumeo: #fa9b1b;
     --color-ilumeo-rgb: 250, 155, 27;
+    --color-subtitle: #868e96;
 
     --color-primary: #1e2733;
     --color-primary-rgb: 30, 39, 51;
@@ -55,6 +56,11 @@ body {
     --button-radius: 10em;
 
     --mantine-color-text: var(--color-default);
+
+    --mantine-primary-color-filled: var(--bg-color-primary);
+    --mantine-primary-color-contrast: var(--color-primary);
+    --mantine-primary-color-filled-hover: var(--bg-color-primary);
+    --mantine-primary-color-light: rgba(var(--bg-color-primary-rgb), 0.3);
 }
 
 div[class*='card'] {
@@ -111,6 +117,25 @@ button:not(:has(img)) {
     --mantine-color-white: var(--color-primary);
 }
 
+.mantine-Popover-dropdown {
+    --mantine-color-white: rgba(var(--bg-color-default-rgb), 0.75);
+}
+
+.mantine-DatePickerInput-day:where([data-first-in-range]) {
+    --mantine-primary-color-light-hover: rgba(var(--bg-color-primary-rgb), 0.5);
+    --mantine-primary-color-contrast: var(--color-primary);
+}
+
+.mantine-DatePickerInput-day:where([data-in-range]) {
+    --mantine-primary-color-light-hover: rgba(var(--bg-color-primary-rgb), 0.3);
+    /* --mantine-color-text: var(--color-primary); */
+}
+
+.mantine-InputWrapper-description {
+    color: var(--color-subtitle);
+    margin-bottom: 7px;
+}
+
 .mantine-Menu-dropdown {
     background-color: var(--bg-color-default);
 }
@@ -123,7 +148,8 @@ button:not(:has(img)) {
     --mantine-spacing-md: 20px;
 }
 
-.mantine-TextInput-label {
+.mantine-TextInput-label,
+.mantine-DatePickerInput-label {
     margin-bottom: 9px;
 }
 

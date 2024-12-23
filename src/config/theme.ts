@@ -2,6 +2,7 @@ import { createTheme, Text, Title } from '@mantine/core';
 
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 
 const theme = createTheme({
     /** Put your mantine theme override here */

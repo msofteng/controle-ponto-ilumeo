@@ -18,13 +18,10 @@ export function Login(props: { loginDashboard: () => void }) {
     const executaLogin = (values: { codigo: string }, e?: FormEvent<HTMLFormElement>) => {
         e?.preventDefault();
 
-        console.log(values);
-
         props.loginDashboard();
     };
 
     useEffect(() => {
-        console.log('teste');
         notifications.show({ message: 'Please fill name field', autoClose: 120000, ...options });
     }, []);
 
