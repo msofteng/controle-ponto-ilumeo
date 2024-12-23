@@ -18,7 +18,7 @@ export function TratamentoPonto(props: { user?: Usuario }) {
 
     useEffect(() => {
         service
-            .getAllMarks(props.user!.id)
+            .getAllMarks(Number(props.user?.id))
             .then(
                 (marcacoes) => (setResultados(converterMarcacoesEmGraficoDiario(marcacoes)), setMarcacoes(marcacoes))
             );

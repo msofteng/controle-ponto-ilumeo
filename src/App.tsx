@@ -21,6 +21,7 @@ function App() {
         setLogged(!logged);
         setUserLogged(user);
 
+        setTimeout(closeNavbar, 1000);
         navigate('/app/home');
     };
 
@@ -138,7 +139,7 @@ function App() {
                 {logged ? (
                     <Route path='app'>
                         <Route index path='home' element={<Inicio />} />
-                        <Route path='relogio' element={<RelogioPonto />} />
+                        <Route path='relogio' element={<RelogioPonto user={userLogged} />} />
                         <Route path='tratamento' element={<TratamentoPonto user={userLogged} />} />
                         <Route path='analise' element={<AnalisePonto user={userLogged} />} />
                         <Route path='horarios' element={<TurnosHorarios />} />

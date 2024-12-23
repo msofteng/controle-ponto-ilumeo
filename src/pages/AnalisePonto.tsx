@@ -11,7 +11,9 @@ export function AnalisePonto(props: { user?: Usuario }) {
     const [resultados, setResultados] = useState<GraficoData>({ categories: [], series: [] });
 
     useEffect(() => {
-        service.getAllMarks(props.user!.id).then((marcacoes) => setResultados(converterMarcacoesEmGrafico(marcacoes)));
+        service
+            .getAllMarks(Number(props.user?.id))
+            .then((marcacoes) => setResultados(converterMarcacoesEmGrafico(marcacoes)));
     }, []);
 
     return (

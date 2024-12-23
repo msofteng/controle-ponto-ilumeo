@@ -1,9 +1,72 @@
 import { DonutChart } from '@mantine/charts';
 import { Button, Group, Pagination, Paper, Progress, Text, Textarea, Title } from '@mantine/core';
+import { Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
+import { useEffect, useState } from 'react';
 
 import Card from '../shared/components/Card';
+import service from '../shared/services/service';
 
-export function RelogioPonto() {
+export function RelogioPonto(props: { user?: Usuario }) {
+    const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
+
+    useEffect(() => {
+        service.getAllMarks(Number(props.user?.id)).then((marcacoes) => setMarcacoes(marcacoes.reverse()));
+    }, []);
+
+    // Função para calcular as horas trabalhadas, descontando a hora de almoço
+    const calcularHorasTrabalhadas = (
+        dataInicio: Date,
+        dataTermino: Date | null
+    ): { horasTrabalhadas: number; horasAusentes: number } => {
+        if (!dataTermino) return { horasTrabalhadas: 0, horasAusentes: 8 }; // Caso não tenha termino, considera como ausente.
+
+        // Calculando as horas totais
+        const horasTrabalhadas = (dataTermino.getTime() - dataInicio.getTime()) / (1000 * 60 * 60); // horas totais trabalhadas
+
+        // Verificar intervalo de almoço (das 12h00 às 13h00)
+        const horaAlmocoInicio = new Date(dataInicio);
+        horaAlmocoInicio.setHours(12, 0, 0, 0);
+        const horaAlmocoFim = new Date(dataInicio);
+        horaAlmocoFim.setHours(13, 0, 0, 0);
+
+        let horasAlmoco = 0;
+        if (dataInicio < horaAlmocoFim && dataTermino > horaAlmocoInicio) {
+            horasAlmoco = 1; // Se o intervalo de almoço estiver dentro do horário de trabalho
+        }
+
+        const horasTrabalhadasCorrigidas = Math.max(0, horasTrabalhadas - horasAlmoco); // Desconta a hora de almoço, mas garante que não fique negativo.
+
+        // Calcular horas ausentes (se menos de 8 horas trabalhadas)
+        const horasAusentes = Math.max(0, 8 - horasTrabalhadasCorrigidas);
+
+        return { horasTrabalhadas: horasTrabalhadasCorrigidas, horasAusentes };
+    };
+
+    // Função para calcular a jornada adicional
+    const calcularJornadaAdicional = (horasTrabalhadas: number) => {
+        const jornadaBase = 8; // jornada de 8 horas
+        if (horasTrabalhadas > jornadaBase) {
+            const horasAdicionais = horasTrabalhadas - jornadaBase;
+            const horas = Math.floor(horasAdicionais);
+            const minutos = Math.round((horasAdicionais - horas) * 60);
+            return `${horas}h ${minutos}m`;
+        }
+        return null;
+    };
+
+    // Função para calcular o progresso (percentual de horas trabalhadas)
+    const calcularProgresso = (horasTrabalhadas: number) => {
+        const jornadaBase = 8;
+        const progresso = Math.min((horasTrabalhadas / jornadaBase) * 100, 100);
+        return progresso;
+    };
+
+    // Função para formatar a data como "10 de dezembro de 2024"
+    const formatarDataPorExtenso = (data: Date) => {
+        const opcoes: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Intl.DateTimeFormat('pt-BR', opcoes).format(data);
+    };
+
     return (
         <Card
             cardProps={{ id: 'card-turno' }}
@@ -30,36 +93,44 @@ export function RelogioPonto() {
                             FINALIZAR TURNO
                         </Button>
 
-                        {Array.from({ length: 5 }).map((_, index: number) => (
-                            <Paper key={index} radius='md' withBorder className='card-detail' mt={20}>
-                                <Text ta='left' fw={700} className='title'>
-                                    10 de dezembro de 2024
-                                </Text>
-                                <Text c='dimmed' ta='left' fz='sm'>
-                                    7h 30m / 8h
-                                </Text>
+                        {marcacoes.map((marcacao) => {
+                            const dataInicio = new Date(marcacao.inicio);
+                            const dataTermino = marcacao.termino ? new Date(marcacao.termino) : null;
+                            const { horasTrabalhadas } = calcularHorasTrabalhadas(dataInicio, dataTermino);
+                            const jornadaAdicional = calcularJornadaAdicional(horasTrabalhadas);
+                            const progresso = calcularProgresso(horasTrabalhadas);
 
-                                <Group justify='space-between' mt='xs'>
-                                    <Text fz='sm' c='dimmed'>
-                                        Progresso
+                            return (
+                                <Paper key={marcacao.id} radius='md' withBorder className='card-detail' mt={20}>
+                                    <Text ta='left' fw={700} className='title'>
+                                        {formatarDataPorExtenso(dataInicio)}
                                     </Text>
-                                    <Text fz='sm' c='dimmed'>
-                                        90%
-                                    </Text>
-                                </Group>
 
-                                <Progress value={90} mt={5} />
-
-                                <Group justify='space-between' mt='md'>
-                                    <Text fz='sm'>
-                                        <strong>Observação: </strong>
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt autem saepe sit
-                                        aut aliquam. Ducimus praesentium accusantium tempore assumenda cupiditate hic.
-                                        Quo eveniet rerum earum libero voluptatum accusantium sed asperiores.
+                                    <Text c='dimmed' ta='left' fz='sm'>
+                                        {horasTrabalhadas}h / 8h
+                                        {jornadaAdicional && ` (+${jornadaAdicional})`}
                                     </Text>
-                                </Group>
-                            </Paper>
-                        ))}
+
+                                    <Group justify='space-between' mt='xs'>
+                                        <Text fz='sm' c='dimmed'>
+                                            Progresso
+                                        </Text>
+                                        <Text fz='sm' c='dimmed'>
+                                            {Math.round(progresso)}%
+                                        </Text>
+                                    </Group>
+
+                                    <Progress value={progresso} mt={5} />
+
+                                    <Group justify='space-between' mt='md'>
+                                        <Text fz='sm'>
+                                            <strong>Observação: </strong>
+                                            {marcacao.observacao}
+                                        </Text>
+                                    </Group>
+                                </Paper>
+                            );
+                        })}
 
                         <Pagination radius={'md'} total={5} />
                     </div>
