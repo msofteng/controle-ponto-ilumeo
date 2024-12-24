@@ -1,5 +1,5 @@
 <h1><p align="center">
-controle-ponto-ilumeo
+ controle-ponto-ilumeo
 </p></h1>
 
 Este é um sistema de controle de ponto para colaboradores e funcionários da Ilumeo.
@@ -85,4 +85,9 @@ docker-compose up -d
   &nbsp; <img width=30 src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" />
   &nbsp; <img width=30 src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" />
   &nbsp; <img width=30 src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-plain.svg" />
+  &nbsp; <img height=25 src="https://ilumeo.com.br/wp-content/uploads/2023/08/cropped-Icone-Laranja-270x270.png"/>
+</p>
+
+<p align="center">
+  <img height=20 src="https://ilumeo.com.br/wp-content/uploads/2023/05/Frame.png"/>
 </p>
