@@ -42,7 +42,7 @@ export function Conta(props: { user?: Usuario; changeUser: (user: Usuario) => vo
 
         const bool = await service.checkUser(values.usuario);
 
-        if (props.user?.usuario === values.usuario || (props.user?.usuario !== values.usuario && !bool)) {
+        if (props.user?.usuario === values.usuario || (props.user?.usuario !== values.usuario && bool.data === false)) {
             props.changeUser(values);
         } else {
             notifications.show({ message: 'O nome de usuário já existe!', ...options });

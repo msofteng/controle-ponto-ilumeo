@@ -78,6 +78,7 @@
 
     .header button:has(> div .mantine-Avatar-placeholder) {
         transform: scale(0.9);
+        --shadow-img: 0 0 10px rgba(var(--color-ilumeo-rgb), 1) !important;
     }
 }
 

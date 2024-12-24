@@ -1,4 +1,3 @@
-// Função para dividir as marcações em páginas (10 por página)
 export const chunk = <T>(array: T[], size: number): T[][] => {
     if (!array.length) {
         return [];

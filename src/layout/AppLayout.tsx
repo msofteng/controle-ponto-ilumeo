@@ -61,7 +61,7 @@ export default function AppLayout(props: {
                                     <UnstyledButton className={'user' + userMenuOpened ? ' userActive' : ''}>
                                         <Group gap={7}>
                                             <Avatar
-                                                src={props.user.image}
+                                                src={props.user.image || null}
                                                 alt={props.user.nome}
                                                 radius='xl'
                                                 size={'2.6em'}

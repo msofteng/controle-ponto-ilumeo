@@ -34,7 +34,7 @@ body {
 
     --shadow-card: 0 0 5px rgba(var(--color-ilumeo-rgb), 1) !important;
     --shadow-image: 0 0 50px rgba(var(--color-ilumeo-rgb), 0.5) !important;
-    --shadow-img: 0 0 10px rgba(var(--color-ilumeo-rgb), 1) !important;
+    --shadow-img: 0 0 20px rgba(var(--color-ilumeo-rgb), 1) !important;
 
     --mantine-color-blue-filled: rgba(var(--bg-color-primary-rgb), 0.9);
     --mantine-color-blue-filled-hover: rgba(var(--bg-color-primary-rgb), 1);
@@ -193,4 +193,9 @@ span.apexcharts-legend-text {
 
 .mantine-Input-input {
     --input-disabled-bg: rgba(var(--color-default-rgb), 0.25);
+}
+
+:where([data-mantine-color-scheme='light']) .m_77c9d27d:where(:disabled:not([data-loading]), [data-disabled]:not([data-loading])) {
+    --mantine-color-gray-1: rgba(var(--bg-color-primary-rgb), 0.5);
+    --mantine-color-gray-5: rgba(var(--color-primary-rgb), 0.5);
 }

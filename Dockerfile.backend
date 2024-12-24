@@ -1,0 +1,15 @@
+FROM node:20
+
+WORKDIR /app
+
+RUN npm init -y && \
+    npm pkg set scripts.mock="json-server --watch db.json --port 3001 --host 0.0.0.0" name="ponto-ilumeo-service" && \
+    npm pkg delete scripts.test main keywords author license description
+
+RUN npm install json-server@0.17.4
+
+COPY db.json /app/db.json
+
+EXPOSE 3001
+
+CMD ["npm", "run", "mock"]

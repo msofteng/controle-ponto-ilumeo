@@ -117,7 +117,7 @@ function App() {
             {userLogged ? (
                 <UnstyledButton className='user-navbar'>
                     <Group>
-                        <Avatar src={userLogged.image} radius='xl' className='shadow-image' />
+                        <Avatar src={userLogged.image || null} radius='xl' className='shadow-image' />
 
                         <div style={{ flex: 1 }}>
                             <Text>{userLogged.nome}</Text>

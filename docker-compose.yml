@@ -1,0 +1,26 @@
+services:
+    frontend:
+        container_name: ponto-ilumeo-web
+        build:
+            context: .
+            dockerfile: Dockerfile.frontend
+        ports:
+            - "3000:3000"
+        depends_on:
+            - backend
+        environment:
+            - NODE_ENV=development
+        env_file:
+            - .env.development
+
+    backend:
+        container_name: ponto-ilumeo-service
+        build:
+            context: .
+            dockerfile: Dockerfile.backend
+        ports:
+            - "3001:3001"
+        volumes:
+            - ./db.json:/app/db.json
+        environment:
+            - NODE_ENV=development
