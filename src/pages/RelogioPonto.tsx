@@ -9,6 +9,7 @@ import { chunk } from '../shared/functions/utils';
 import Card from '../shared/components/Card';
 import toFixed from '../shared/functions/number';
 import service from '../shared/services/service';
+import TitlePage from '../shared/components/TitlePage';
 
 export function RelogioPonto(props: { user?: Usuario }) {
     const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);
@@ -158,7 +159,7 @@ export function RelogioPonto(props: { user?: Usuario }) {
                 <>
                     <div className='marcacao-ponto'>
                         <div className='titulo-relogio'>
-                            <Title order={3}>Relógio de ponto</Title>
+                            <Title order={3}>Relógio de Ponto</Title>
                             <div>
                                 <Title fw={700} order={5}>
                                     #{props.user?.codigo}
@@ -278,6 +279,8 @@ export function RelogioPonto(props: { user?: Usuario }) {
                             size={400}
                         />
                     </div>
+
+                    <TitlePage content='Relógio de Ponto &nbsp;|&nbsp; Ponto Ilumeo' />
                 </>
             }
         />

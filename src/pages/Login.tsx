@@ -1,12 +1,13 @@
 import { Box, Button, Divider, TextInput, Title } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { CSSProperties, FormEvent } from 'react';
+import { FormEvent } from 'react';
 import { Login as ILogin, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 
 import options from '../config/notification';
 import Card from '../shared/components/Card';
 import service from '../shared/services/service';
+import TitlePage from '../shared/components/TitlePage';
 
 export function Login(props: { loginDashboard: (user: Usuario) => void; toCadastro: () => void }) {
     const form = useForm({
@@ -89,7 +90,14 @@ export function Login(props: { loginDashboard: (user: Usuario) => void; toCadast
                     </form>
                 }
             />
-            <div className='cover-login' style={{ '--bg-image': 'url(' + require('../assets/img/capa-1.jpg') + ')' } as CSSProperties} />
+            <iframe
+                className='cover-login'
+                title='vídeo (apresentação)'
+                src='https://www.youtube.com/embed/6KZo1PltC_g?autoplay=1&mute=1&controls=1'
+                allow='autoplay; fullscreen'
+            />
+
+            <TitlePage content='Login &nbsp;|&nbsp; Ponto Ilumeo' />
         </div>
     );
 }

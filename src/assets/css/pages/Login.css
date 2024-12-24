@@ -25,13 +25,14 @@ body:has(> div div .page-login) .mainSection {
 
 .page-login .cover-login {
     margin-left: 50px;
-    height: calc(100vh - ((var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) + 40px));
+    height: calc(100vh - ((var(--app-shell-header-offset, 0rem) + var(--app-shell-padding)) + 47px));
     border-radius: 16px;
     box-shadow: var(--shadow-image);
     width: calc(100% - (400px + 50px));
-    background-image: var(--bg-image);
-    background-repeat: no-repeat;
-    background-size: cover;
+    border: 2px solid rgba(var(--color-ilumeo-rgb), 0.5);
+    /* background-image: var(--bg-image); */
+    /* background-repeat: no-repeat; */
+    /* background-size: cover; */
 }
 
 @media (max-width: 970px) or (min-height: 830px) {

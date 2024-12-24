@@ -2,7 +2,7 @@ import { Box, Button, Divider, FileButton, TextInput, Title, Tooltip } from '@ma
 import { Text } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
-import { CSSProperties, FormEvent, useRef, useState } from 'react';
+import { FormEvent, useRef, useState } from 'react';
 import { Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 import { gerarToken } from '../shared/functions/utils';
 import { fileToBase64 } from '../shared/functions/file';
@@ -10,6 +10,7 @@ import { fileToBase64 } from '../shared/functions/file';
 import options from '../config/notification';
 import Card from '../shared/components/Card';
 import service from '../shared/services/service';
+import TitlePage from '../shared/components/TitlePage';
 
 export function Cadastro(props: { executaLogin: (user: Usuario) => void; toLogin: () => void }) {
     const form = useForm<Usuario>({
@@ -124,7 +125,14 @@ export function Cadastro(props: { executaLogin: (user: Usuario) => void; toLogin
                     </form>
                 }
             />
-            <div className='cover-login' style={{ '--bg-image': 'url(' + require('../assets/img/capa-1.jpg') + ')' } as CSSProperties} />
+            <iframe
+                className='cover-login'
+                title='vídeo (apresentação)'
+                src='https://www.youtube.com/embed/c5E7__oAaO8?autoplay=1&mute=1&controls=1'
+                allow='autoplay; fullscreen'
+            />
+
+            <TitlePage content='Cadastro &nbsp;|&nbsp; Ponto Ilumeo' />
         </div>
     );
 }

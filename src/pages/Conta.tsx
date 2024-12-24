@@ -8,6 +8,7 @@ import { notifications } from '@mantine/notifications';
 import Card from '../shared/components/Card';
 import options from '../config/notification';
 import service from '../shared/services/service';
+import TitlePage from '../shared/components/TitlePage';
 
 export function Conta(props: { user?: Usuario; changeUser: (user: Usuario) => void }) {
     const form = useForm({
@@ -83,6 +84,8 @@ export function Conta(props: { user?: Usuario; changeUser: (user: Usuario) => vo
                     <Button type='submit' variant='filled'>
                         Atualizar Informações
                     </Button>
+
+                    <TitlePage content='Minha Conta &nbsp;|&nbsp; Ponto Ilumeo' />
                 </form>
             }
         />

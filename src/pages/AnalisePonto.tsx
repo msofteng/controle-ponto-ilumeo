@@ -6,6 +6,7 @@ import { GraficoData, Usuario } from '../shared/models/interfaces/controle-ponto
 import Chart from 'react-apexcharts';
 import Card from '../shared/components/Card';
 import service from '../shared/services/service';
+import TitlePage from '../shared/components/TitlePage';
 
 export function AnalisePonto(props: { user?: Usuario }) {
     const [resultados, setResultados] = useState<GraficoData>({ categories: [], series: [] });
@@ -54,6 +55,8 @@ export function AnalisePonto(props: { user?: Usuario }) {
                         type='area'
                         height={350}
                     />
+
+                    <TitlePage content='Análise de Ponto &nbsp;|&nbsp; Ponto Ilumeo' />
                 </div>
             }
         />

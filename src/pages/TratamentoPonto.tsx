@@ -10,6 +10,7 @@ import Card from '../shared/components/Card';
 import service from '../shared/services/service';
 
 import 'dayjs/locale/pt';
+import TitlePage from '../shared/components/TitlePage';
 
 export function TratamentoPonto(props: { user?: Usuario }) {
     const [value, setValue] = useState<[Date | null, Date | null]>([null, null]);
@@ -95,6 +96,8 @@ export function TratamentoPonto(props: { user?: Usuario }) {
                             },
                         ]}
                     />
+
+                    <TitlePage content='Tratamento de Ponto &nbsp;|&nbsp; Ponto Ilumeo' />
                 </div>
             }
         />
