@@ -1,4 +1,4 @@
-import { Button, TextInput, Title } from '@mantine/core';
+import { Box, Button, Divider, TextInput, Title } from '@mantine/core';
 import { isNotEmpty, useForm } from '@mantine/form';
 import { notifications } from '@mantine/notifications';
 import { CSSProperties, FormEvent } from 'react';
@@ -8,7 +8,7 @@ import options from '../config/notification';
 import Card from '../shared/components/Card';
 import service from '../shared/services/service';
 
-export function Login(props: { loginDashboard: (user: Usuario) => void }) {
+export function Login(props: { loginDashboard: (user: Usuario) => void; toCadastro: () => void }) {
     const form = useForm({
         mode: 'uncontrolled',
         initialValues: { codigo: '' },
@@ -70,9 +70,22 @@ export function Login(props: { loginDashboard: (user: Usuario) => void }) {
                             {...form.getInputProps('codigo')}
                         />
 
-                        <Button type='submit' mt={'sm'} variant='filled'>
-                            Confirmar
-                        </Button>
+                        <Divider my='md' />
+
+                        <Box>
+                            <Button type='submit' variant='filled'>
+                                Confirmar
+                            </Button>
+                            <Button
+                                ml={'sm'}
+                                onClick={props.toCadastro}
+                                variant='filled'
+                                color='var(--bg-color-secondary)'
+                                style={{ color: 'var(--color-secondary)' }}
+                            >
+                                Cadastre-se
+                            </Button>
+                        </Box>
                     </form>
                 }
             />

@@ -54,6 +54,31 @@ function getUser(id: number): AxiosResponse<Usuario> {
     return http.get<Usuario>(`/usuarios/${id}`);
 }
 
+function checkUser(username: string): AxiosResponse<boolean> {
+    return http
+        .get<Usuario[]>('/usuarios', {
+            params: {
+                usuario: username,
+            },
+        })
+        .then((response) => {
+            if (response.data.length > 0) {
+                return {
+                    data: true,
+                } as Axios.AxiosXHR<boolean>;
+            } else {
+                return {
+                    data: false,
+                } as Axios.AxiosXHR<boolean>;
+            }
+        })
+        .catch(() => {
+            return {
+                data: false,
+            } as Axios.AxiosXHR<boolean>;
+        });
+}
+
 function createUser(data: Usuario): AxiosResponse<Usuario> {
     return http.post<Usuario>('/usuarios', data);
 }
@@ -135,6 +160,7 @@ const service = {
     createMark,
     updateMark,
     removeMark,
+    checkUser,
 };
 
 export default service;

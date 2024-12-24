@@ -34,7 +34,7 @@ body:has(> div div .page-login) .mainSection {
     background-size: cover;
 }
 
-@media (max-width: 970px) {
+@media (max-width: 970px) or (min-height: 830px) {
     .page-login {
         justify-content: center;
     }

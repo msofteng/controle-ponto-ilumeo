@@ -10,7 +10,13 @@ import theme from '../config/theme';
 
 import '../assets/css/layout/AppLayout.css';
 
-export default function AppLayout(props: { navbar?: ReactElement; user?: Usuario; logout: () => void; closeNavbar: () => void }) {
+export default function AppLayout(props: {
+    navbar?: ReactElement;
+    user?: Usuario;
+    logout: () => void;
+    removeAccount: () => void;
+    closeNavbar: () => void;
+}) {
     const [opened, { toggle }] = useDisclosure(false);
     const [userMenuOpened, setUserMenuOpened] = useState(false);
 
@@ -77,7 +83,7 @@ export default function AppLayout(props: { navbar?: ReactElement; user?: Usuario
                                     <Link to={'/app/conta'} onClick={props.closeNavbar}>
                                         <Menu.Item leftSection={<IconUser size={16} stroke={1.5} />}>Minha Conta</Menu.Item>
                                     </Link>
-                                    <Menu.Item color='red' leftSection={<IconTrash size={16} stroke={1.5} />} onClick={props.logout}>
+                                    <Menu.Item color='red' leftSection={<IconTrash size={16} stroke={1.5} />} onClick={props.removeAccount}>
                                         Remover Conta
                                     </Menu.Item>
                                 </Menu.Dropdown>

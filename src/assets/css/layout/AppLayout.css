@@ -76,7 +76,7 @@
         transform: scale(0.85);
     }
 
-    .header button:has(> div img) {
+    .header button:has(> div .mantine-Avatar-placeholder) {
         transform: scale(0.9);
     }
 }

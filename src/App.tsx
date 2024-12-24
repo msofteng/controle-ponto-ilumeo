@@ -25,6 +25,14 @@ function App() {
         navigate('/app/home');
     };
 
+    const finalizaCadastro = (user: Usuario) => {
+        setLogged(!logged);
+        setUserLogged(user);
+
+        setTimeout(closeNavbar, 1000);
+        navigate('/app/home');
+    };
+
     const changeUser = (user: Usuario) => {
         notifications.show({ message: 'As suas informações foram atualizadas com sucesso!', ...options });
         service.updateUser(user).then((res) => setUserLogged(res.data));
@@ -33,6 +41,13 @@ function App() {
     const logout = () => {
         setLogged(!logged);
         navigate('/login');
+    };
+
+    const removeAccount = () => {
+        service.removeUser(Number(userLogged?.id));
+        setLogged(!logged);
+
+        notifications.show({ message: 'A sua conta foi excluída com sucesso!', onClose: () => navigate('/login'), ...options });
     };
 
     const closeNavbar = () => {
@@ -125,12 +140,13 @@ function App() {
                         navbar={logged ? navbarApp : undefined}
                         user={logged ? userLogged : undefined}
                         logout={logout}
+                        removeAccount={removeAccount}
                         closeNavbar={closeNavbar}
                     />
                 }
             >
-                <Route path='login' element={<Login loginDashboard={loginDashboard} />} />
-                <Route path='cadastro' element={<Cadastro />} />
+                <Route path='login' element={<Login toCadastro={() => navigate('/cadastro')} loginDashboard={loginDashboard} />} />
+                <Route path='cadastro' element={<Cadastro toLogin={() => navigate('/login')} executaLogin={finalizaCadastro} />} />
 
                 {logged ? (
                     <Route path='app'>

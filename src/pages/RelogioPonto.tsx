@@ -203,7 +203,12 @@ export function RelogioPonto(props: { user?: Usuario }) {
                             onChange={(e) => setObservacao(e.target.value)}
                         />
 
-                        <Button mt='md' variant='filled' onClick={iniciado ? finalizarTurno : iniciarTurno}>
+                        <Button
+                            mt='md'
+                            variant='filled'
+                            {...(iniciado ? { color: 'var(--bg-color-secondary)', style: { color: 'var(--color-secondary)' } } : {})}
+                            onClick={iniciado ? finalizarTurno : iniciarTurno}
+                        >
                             {iniciado ? 'FINALIZAR TURNO' : 'INICIAR TURNO'}
                         </Button>
 
