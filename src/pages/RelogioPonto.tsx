@@ -4,11 +4,11 @@ import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { ajustarFusoHorarioBrasilia } from '../shared/functions/date-convert';
 import { Marcacao, Usuario } from '../shared/models/interfaces/controle-ponto.entities';
+import { chunk } from '../shared/functions/utils';
 
 import Card from '../shared/components/Card';
 import toFixed from '../shared/functions/number';
 import service from '../shared/services/service';
-import { chunk } from '../shared/functions/utils';
 
 export function RelogioPonto(props: { user?: Usuario }) {
     const [marcacoes, setMarcacoes] = useState<Marcacao[]>([]);

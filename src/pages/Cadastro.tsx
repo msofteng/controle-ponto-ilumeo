@@ -5,11 +5,11 @@ import { notifications } from '@mantine/notifications';
 import { CSSProperties, FormEvent, useRef, useState } from 'react';
 import { Usuario } from '../shared/models/interfaces/controle-ponto.entities';
 import { gerarToken } from '../shared/functions/utils';
+import { fileToBase64 } from '../shared/functions/file';
 
 import options from '../config/notification';
 import Card from '../shared/components/Card';
 import service from '../shared/services/service';
-import { fileToBase64 } from '../shared/functions/file';
 
 export function Cadastro(props: { executaLogin: (user: Usuario) => void; toLogin: () => void }) {
     const form = useForm<Usuario>({

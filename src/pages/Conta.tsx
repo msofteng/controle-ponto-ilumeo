@@ -2,10 +2,10 @@ import { Box, Button, Divider, FileButton, Text, TextInput, Title } from '@manti
 import { isNotEmpty, useForm } from '@mantine/form';
 import { FormEvent, useEffect, useRef, useState } from 'react';
 import { Usuario } from '../shared/models/interfaces/controle-ponto.entities';
-
-import Card from '../shared/components/Card';
 import { base64ToFile, fileToBase64 } from '../shared/functions/file';
 import { notifications } from '@mantine/notifications';
+
+import Card from '../shared/components/Card';
 import options from '../config/notification';
 import service from '../shared/services/service';
 
